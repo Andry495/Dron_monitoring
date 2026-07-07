@@ -1,0 +1,67 @@
+# Пример сетевой конфигурации
+# Скопировать в site.yaml и подставить реальные значения
+
+site:
+  name: cube-01
+  lat: 0.0
+  lon: 0.0
+  altitude_m: 0
+  magnetic_declination_deg: 0
+  orientation_deg: 0  # 0 = сторона N на истинный север
+
+network:
+  subnet: 192.168.10.0/24
+  mini_pc: 192.168.10.10
+  mqtt_port: 1883
+
+cameras:
+  dome:
+    id: dome
+    ip: 192.168.10.11
+    rtsp: rtsp://192.168.10.11:554/stream1
+    rtsp_sub: rtsp://192.168.10.11:554/stream2
+    role: sky_watch
+
+  ptz:
+    - id: north
+      ip: 192.168.10.12
+      rtsp: rtsp://192.168.10.12:554/stream1
+      base_az_deg: 0
+      mqtt_ptz_id: north
+      offset_en_m: [0.5, 0.5]
+
+    - id: east
+      ip: 192.168.10.13
+      rtsp: rtsp://192.168.10.13:554/stream1
+      base_az_deg: 90
+      mqtt_ptz_id: east
+      offset_en_m: [0.5, -0.5]
+
+    - id: south
+      ip: 192.168.10.14
+      rtsp: rtsp://192.168.10.14:554/stream1
+      base_az_deg: 180
+      mqtt_ptz_id: south
+      offset_en_m: [-0.5, -0.5]
+
+    - id: west
+      ip: 192.168.10.15
+      rtsp: rtsp://192.168.10.15:554/stream1
+      base_az_deg: 270
+      mqtt_ptz_id: west
+      offset_en_m: [-0.5, 0.5]
+
+esp32:
+  - id: north
+    ip: 192.168.10.22
+  - id: east
+    ip: 192.168.10.23
+  - id: south
+    ip: 192.168.10.24
+  - id: west
+    ip: 192.168.10.25
+
+cube:
+  half_size_m: 0.5
+  ptz_mount_height_m: 1.2
+  dome_height_m: 1.8

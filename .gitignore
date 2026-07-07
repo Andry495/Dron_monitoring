@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+*.egg-info/
+dist/
+build/
+
+# Data & recordings
+data/
+recordings/
+*.mp4
+*.mkv
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Docker
+*.log
+
+# Secrets
+.env
+.env.local
+credentials.json
+
+# Models (large files)
+models/*.onnx
+models/*.pt
+!models/.gitkeep
+
+# Firmware build
+firmware/**/build/
+firmware/**/.pio/
