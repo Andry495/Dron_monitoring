@@ -31,10 +31,11 @@
 
 | Схема | Файл |
 |-------|------|
-| Вид сбоку (▲ вверх) | [cube-side-view.svg](images/cube-side-view.svg) |
-| Вид сверху (N/E/S/W) | [cube-top-view.svg](images/cube-top-view.svg) |
-| Обзор комплекса | [system-overview.svg](images/system-overview.svg) |
-| Сеть | [network-topology.svg](images/network-topology.svg) |
+| Вид сбоку (▲ вверх) | [cube-side-view.png](images/cube-side-view.png) |
+| Вид сверху (N/E/S/W) | [cube-top-view.png](images/cube-top-view.png) |
+| Обзор комплекса | [system-overview.png](images/system-overview.png) |
+| Сеть | [network-topology.png](images/network-topology.png) |
+| Исходники (SVG) | `docs/images/*.svg` — для редактирования; в README используются PNG (GitHub не показывает SVG) |
 
 ```mermaid
 flowchart TB

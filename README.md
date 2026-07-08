@@ -1,7 +1,7 @@
 # Dron Monitoring
 
 <p align="center">
-  <img src="docs/images/system-overview.svg" alt="Комплекс мониторинга неба — куб с камерами, смотрящими вверх" width="900">
+  <img src="docs/images/system-overview.png" alt="Комплекс мониторинга неба — куб с камерами, смотрящими вверх" width="900">
 </p>
 
 <p align="center">
@@ -49,7 +49,7 @@
 ## Как это работает
 
 <p align="center">
-  <img src="docs/images/detection-flow.svg" alt="Поток обработки: обнаружение → наведение → классификация" width="900">
+  <img src="docs/images/detection-flow.png" alt="Поток обработки: обнаружение → наведение → классификация" width="900">
 </p>
 
 ```mermaid
@@ -90,11 +90,11 @@ sequenceDiagram
 Камеры устанавливаются **на верхней грани** куба. В положении **home** оптическая ось направлена **вверх** — на небо (к зениту). Купольная даёт широкий обзор; угловые PTZ отклоняются pan/tilt от вертикали к цели.
 
 <p align="center">
-  <img src="docs/images/cube-side-view.svg" alt="Вид сбоку — камеры смотрят вверх" width="760">
+  <img src="docs/images/cube-side-view.png" alt="Вид сбоку — камеры смотрят вверх" width="760">
 </p>
 
 <p align="center">
-  <img src="docs/images/cube-top-view.svg" alt="Вид сверху — купол в центре, PTZ по углам" width="720">
+  <img src="docs/images/cube-top-view.png" alt="Вид сверху — купол в центре, PTZ по углам" width="720">
 </p>
 
 ```mermaid
@@ -153,7 +153,7 @@ flowchart TB
 ## Сеть и питание
 
 <p align="center">
-  <img src="docs/images/network-topology.svg" alt="Сетевая топология: 12-портовый switch" width="900">
+  <img src="docs/images/network-topology.png" alt="Сетевая топология: 12-портовый switch" width="900">
 </p>
 
 | Устройство | Кол-во | Порт switch |
