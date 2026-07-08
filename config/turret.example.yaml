@@ -1,0 +1,63 @@
+# Турель — конфигурация
+# cp config/turret.example.yaml config/turret.yaml
+
+turret:
+  id: turret-01
+  enabled: false          # true только после полигона
+  ip: 192.168.10.30
+  api_port: 8030
+
+mount:
+  # ENU смещение узла pan/tilt от site origin (м)
+  offset_enu_m: [0.0, 0.0, 0.0]
+  base_az_deg: 0          # привязка нуля pan к северу
+  park_az_deg: 0
+  park_el_deg: 45
+
+engagement:
+  range_min_m: 10
+  range_max_m: 50
+  allowed_classes: [drone]
+  min_class_confidence: 0.85
+  cooldown_after_fire_s: 30
+  max_fire_rate_per_min: 2
+
+camera:
+  id: turret_cam
+  ip: 192.168.10.31
+  rtsp_main: rtsp://192.168.10.31:554/Streaming/Channels/101
+  fps: 30
+  hfov_deg: 30
+  # смещение оптической оси относительно ствола (град)
+  bore_offset_az_deg: 0.0
+  bore_offset_el_deg: 0.0
+
+pneumatics:
+  pressure_min_bar: 7.5
+  pressure_max_bar: 12.0
+  valve_open_ms: 8
+
+ballistics:
+  muzzle_velocity_m_s: 32
+  net_open_time_s: 0.25
+  system_latency_s: 0.05
+  drag_factor: 0.9
+  # диаметр раскрытой сети по дальности (калибровка)
+  net_diameter_m:
+    - { range_m: 10, diameter_m: 2.5 }
+    - { range_m: 25, diameter_m: 3.5 }
+    - { range_m: 50, diameter_m: 4.5 }
+
+tracking:
+  coarse_slew_deg_s: 60
+  track_loop_hz: 40
+  fire_solution_stable_frames: 5
+  lost_target_timeout_s: 2.0
+
+safety:
+  require_physical_arm: true
+  heartbeat_timeout_ms: 500
+  el_min_deg: 5           # не стрелять в землю
+  el_max_deg: 80
+  sector_az_min_deg: 0
+  sector_az_max_deg: 360

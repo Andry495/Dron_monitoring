@@ -1,20 +1,33 @@
 # Dron Monitoring
 
 <p align="center">
-  <img src="docs/images/system-overview.png" alt="Комплекс мониторинга неба — куб с камерами, смотрящими вверх" width="900">
+  <img src="docs/images/system-overview.png" alt="Комплекс v1: 4 sky + 4 PTZ + ai-engine" width="900">
 </p>
 
 <p align="center">
   <strong>Автономный комплекс наблюдения за воздушным пространством</strong><br>
-  Купольная камера ищет аномалии на небе → угловые PTZ наводятся и классифицируют объект → координаты, высота, запись для оператора.
+  4 камеры неба фиксируют движение → 2 PTZ наводятся и классифицируют → координаты, высота, запись для оператора.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/status-design-blue" alt="status">
+  <img src="https://img.shields.io/badge/комплект-v1-green" alt="v1">
   <img src="https://img.shields.io/badge/python-3.12+-3776AB?logo=python&logoColor=white" alt="python">
-  <img src="https://img.shields.io/badge/ESP32-Ethernet-00979D?logo=espressif&logoColor=white" alt="esp32">
-  <img src="https://img.shields.io/badge/AI-ONNX_CPU-005CED" alt="onnx">
+  <img src="https://img.shields.io/badge/PTZ-ONVIF_25x-blue" alt="ptz">
+  <img src="https://img.shields.io/badge/ai--engine-отдельный_сервис-7C3AED" alt="ai">
 </p>
+
+---
+
+## Комплект v1 (рекомендуемый)
+
+| Слой | Модель × кол-во | Роль |
+|------|-----------------|------|
+| **Небо** | Hikvision **DS-2CD2T47G2-L(2.8mm)** × 4 | Движение, грубый az/el |
+| **Углы** | Hikvision **DS-2DE4A425IWG-E** × 4 | Наведение, зум 25×, форма, координаты |
+| **Вычисления** | мини-ПК: **monitor-core** + **ai-engine** | Управление отдельно от NN |
+| **Сеть** | Switch **12p**, без PoE | 9 портов занято |
+
+**Ориентировочная стоимость камер:** ~**252 000 ₽**
 
 ---
 
@@ -34,142 +47,104 @@
 
 ## Назначение
 
-Комплекс предназначен для **обнаружения и сопровождения** летящих объектов на небе:
+Обнаружение и сопровождение объектов на небе: дроны, самолёты, вертолёты, ракеты.
 
-| Класс объекта | Примеры |
-|---------------|---------|
-| БПЛА | дроны, квадрокоптеры |
-| Авиация | самолёты, вертолёты |
-| Другое | ракеты, неопознанные цели |
-
-**Не в scope:** поиск открытых IP-камер в интернете. Используются **собственные** камеры комплекса.
+| Камера | Задача |
+|--------|--------|
+| **4× Sky** | Только **факт движения** + направление |
+| **4× PTZ** | **Наведение**, зум, **форма**, **координаты** (триангуляция 2 шт.) |
 
 ---
 
 ## Как это работает
 
 <p align="center">
-  <img src="docs/images/detection-flow.png" alt="Поток обработки: обнаружение → наведение → классификация" width="900">
+  <img src="docs/images/detection-flow.png" alt="Поток обработки v1" width="900">
 </p>
 
 ```mermaid
 sequenceDiagram
-    participant Dome as Купольная камера
+    participant Sky as 4× Sky (фикс)
     participant Core as monitor-core
-    participant MQTT as MQTT broker
-    participant ESP as ESP32 (pan/tilt)
-    participant PTZ as Угловая камера
-    participant AI as AI engine (CPU)
+    participant AI as ai-engine
+    participant PTZ as 2× PTZ (ONVIF)
 
-    Dome->>Core: RTSP, широкий обзор неба
-    Core->>AI: детекция аномалий / движения
-    AI-->>Core: кандидат + трек (az, el)
-    Core->>MQTT: goto pan/tilt (1–2 лучшие PTZ)
-    MQTT->>ESP: команда наведения
-    ESP-->>MQTT: фактические углы (энкодер)
-    Core->>PTZ: zoom (ONVIF / HTTP)
-    PTZ->>Core: RTSP, детальный кадр
-    Core->>AI: классификация объекта
+    Sky->>Core: RTSP субпоток 720p
+    Core->>AI: POST /detect (1–2 FPS)
+    AI-->>Core: кандидат + bbox
+    Core->>Core: трек az/el, склейка overlap
+    Core->>PTZ: ONVIF AbsoluteMove + zoom
+    PTZ->>Core: RTSP main + GetStatus
+    Core->>AI: POST /classify (кроп)
+    AI-->>Core: drone / plane / …
     Core->>Core: триангуляция → lat/lon/alt
-    Core->>Core: запись клипа + каталог
+    Core->>Core: recorder → каталог
 ```
 
 ### Этапы
 
-1. **Поиск** — купольная fisheye-камера непрерывно смотрит **вверх** на небо.
-2. **Трекинг** — ядро ведёт объект, переводит пиксели в азимут/угол места.
-3. **Наведение** — до двух угловых модулей (лучший сектор N/E/S/W) поворачиваются по MQTT.
-4. **Классификация** — нейросеть на CPU анализирует зум-поток.
-5. **Геолокация** — две PTZ + калибровка площадки → дальность, высота, координаты.
-6. **Архив** — клипы и скриншоты для оценки оператором.
+1. **4× Sky** — непрерывный обзор секторов N/E/S/W с перекрытием 15–25%.
+2. **ai-engine** `/detect` — движение / лёгкий детектор (отдельный сервис).
+3. **core** — трекинг, склейка треков на overlap, выбор 1–2 PTZ.
+4. **PTZ** — ONVIF pan/tilt/zoom, классификация через **ai-engine** `/classify`.
+5. **geolocate** — 2 PTZ + калибровка → дальность, высота, координаты.
+6. **recorder** — клипы для оператора.
 
 ---
 
 ## Аппаратная компоновка
 
-Камеры устанавливаются **на верхней грани** куба. В положении **home** оптическая ось направлена **вверх** — на небо (к зениту). Купольная даёт широкий обзор; угловые PTZ отклоняются pan/tilt от вертикали к цели.
+Камеры на **верхней грани** куба, ось **▲ вверх** (зенит). Sky — середины сторон; PTZ — углы.
 
 <p align="center">
-  <img src="docs/images/cube-side-view.png" alt="Вид сбоку — камеры смотрят вверх" width="760">
+  <img src="docs/images/cube-side-view.png" alt="Вид сбоку" width="760">
 </p>
 
 <p align="center">
-  <img src="docs/images/cube-top-view.png" alt="Вид сверху — купол в центре, PTZ по углам" width="720">
+  <img src="docs/images/cube-top-view.png" alt="Вид сверху: 4 sky + 4 PTZ" width="720">
 </p>
 
 ```mermaid
 flowchart TB
     subgraph Sky["▲ Небо"]
-        Z[Зенит / цели]
+        T[Цель]
     end
-
     subgraph Top["Верхняя грань куба"]
-        D[Купол ▲]
-        P1[PTZ NE ▲]
-        P2[PTZ NW ▲]
-        P3[PTZ SE ▲]
-        P4[PTZ SW ▲]
+        SN[Sky N] --- SE[Sky E] --- SS[Sky S] --- SW[Sky W]
+        PN[PTZ NW] --- PE[PTZ NE] --- PS[PTZ SE] --- PW[PTZ SW]
     end
-
-    subgraph Cube["Куб"]
-        Frame[Рама V-slot]
-    end
-
-    Z --- D & P1 & P2 & P3 & P4
-    D & P1 & P2 & P3 & P4 --> Frame
+    T -.-> SN & SE & SS & SW
+    T -.-> PE & PS
 ```
 
-### Ориентация (кратко)
+| Параметр | Sky × 4 | PTZ × 4 |
+|----------|---------|---------|
+| Модель | DS-2CD2T47G2-L | DS-2DE4A425IWG-E |
+| Монтаж | Середина стороны N/E/S/W | Углы куба |
+| Home | ▲ вверх + наклон к сектору | ▲ вверх |
+| Управление | Только RTSP | ONVIF pan/tilt/zoom |
+| Зум | Фикс 2.8 mm | 25× optical |
 
-| Параметр | Значение |
-|----------|----------|
-| Плоскость крепления | Верхняя грань куба |
-| Home | Ось камеры **▲ вверх** (зенит) |
-| Базовые сектора PTZ | N / E / S / W по углам |
-| Наведение | Pan/tilt **от вертикали** к цели у горизонта |
-| Зум | Только IP-камера (ONVIF/HTTP) |
-| Pan/tilt | ESP32 + шаговики + энкодер |
-
-### Угловой модуль
-
-| Компонент | Назначение |
-|-----------|------------|
-| IP-камера | RTSP-поток, **зум** через ONVIF/HTTP |
-| ESP32 + Ethernet | **pan/tilt** — 2 шаговых двигателя, энкодеры, MQTT |
-| Платформа | Поворот и наклон камеры |
-
-Зум управляется **камерой**, поворот/наклон — **ESP32**. Модули сменные и ориентированы на стороны света.
-
-### Приводы
-
-| Ось | Рекомендация |
-|-----|--------------|
-| Pan (поворот) | Шаговый двигатель + червячный редуктор + энкодер AS5600 |
-| Tilt (наклон) | Шаговый или мощное серво + энкодер |
-| Обратная связь | Home (концевик) + энкодер → фактический угол в MQTT |
+> **ESP32 и DIY-приводы в v1 не используются.** См. [docs/alternatives.md](docs/alternatives.md).
 
 ---
 
 ## Сеть и питание
 
 <p align="center">
-  <img src="docs/images/network-topology.png" alt="Сетевая топология: 12-портовый switch" width="900">
+  <img src="docs/images/network-topology.png" alt="Сеть 9 портов" width="900">
 </p>
 
-| Устройство | Кол-во | Порт switch |
-|------------|--------|-------------|
-| Купольная камера | 1 | 1 |
-| Угловые камеры | 4 | 2–5 |
-| ESP32 контроллеры | 4 | 6–9 |
-| Мини-ПК (ядро) | 1 | 10 |
-| Резерв / интернет | — | 11–12 |
+| # | Устройство | IP (пример) |
+|---|------------|-------------|
+| — | мини-ПК | 192.168.10.10 |
+| 1–4 | Sky N/E/S/W | .11 – .14 |
+| 5–8 | PTZ NE/SE/SW/NW | .21 – .24 |
+| 9–10 | Резерв / uplink | — |
 
-- **Switch:** 12 портов, **без PoE** — только Ethernet.
-- **Питание:** отдельная разводка (камеры, ESP32, моторы 12 V, мини-ПК).
-- **Подсеть:** выделенная LAN, статические IP (пример `192.168.10.0/24`).
-- **Интернет:** опционально через uplink; комплекс работает автономно.
-
-Подробнее: [docs/architecture.md](docs/architecture.md)
+- Switch **12p**, без PoE; питание камер — отдельная разводка 12 V.
+- Подсеть `192.168.10.0/24`, статические IP.
+- Интернет опционален; комплекс автономен.
 
 ---
 
@@ -177,48 +152,31 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-    subgraph Edge["Площадка"]
-        C0[Купол RTSP]
-        C1[PTZ × 4 RTSP]
-        E[ESP32 × 4 MQTT]
+    subgraph Cams["8 камер RTSP"]
+        S[Sky ×4]
+        P[PTZ ×4]
     end
 
-    subgraph MiniPC["Мини-ПК / VM"]
-        M[mosquitto]
+    subgraph MiniPC["мини-ПК"]
         Core[monitor-core]
-        AI[ai-engine ONNX CPU]
+        AI[ai-engine]
         Rec[recorder]
         DB[(catalog)]
         API[API / UI]
-
-        M <--> Core
-        Core <--> AI
-        Core --> Rec --> DB
-        DB --> API
+        Core -->|HTTP/gRPC| AI
+        Core --> Rec --> DB --> API
     end
 
-    C0 & C1 --> Core
-    Core <--> M
-    M <--> E
+    S & P --> Core
 ```
 
-| Сервис | Роль |
-|--------|------|
-| **monitor-core** | ingest, трекинг, оркестратор PTZ, geolocate, API |
-| **mosquitto** | MQTT: команды pan/tilt ↔ ESP32 |
-| **ai-engine** | детекция (купол) + классификация (PTZ), CPU/ONNX |
-| **recorder** | клипы и скриншоты по событиям |
-| **catalog** | треки, координаты, классификации, обзор оператором |
+| Сервис | Нагрузка | Роль |
+|--------|----------|------|
+| **monitor-core** | Лёгкая | RTSP, трекинг, ONVIF, geolocate, API |
+| **ai-engine** | NN (CPU) | `/detect` sky, `/classify` PTZ |
+| **recorder** | Диск I/O | Клипы по событиям |
 
-### MQTT (пример)
-
-```json
-// ptz/north/cmd
-{ "cmd": "goto", "pan_deg": 12.0, "tilt_deg": 38.5, "speed": 0.7 }
-
-// ptz/north/state
-{ "pan_deg": 11.8, "tilt_deg": 38.4, "moving": false, "homed": true }
-```
+**Принцип:** нейросеть **не** в процессе core — отдельный контейнер, можно масштабировать / обновлять модели без простоя управления.
 
 ---
 
@@ -226,15 +184,10 @@ flowchart TB
 
 ```text
 Dron_monitoring/
-├── core/                 # ядро: ingest, tracker, orchestrator, geolocate, api
-├── services/
-│   └── ai/               # ONNX inference (CPU)
-├── firmware/
-│   └── ptz-controller/   # ESP32: шаговики, энкодеры, MQTT
-├── config/               # cameras.yaml, site.yaml, calibration
-├── docs/
-│   ├── architecture.md
-│   └── images/
+├── core/              # ingest, sky_watch, tracker, orchestrator, onvif, geolocate, api
+├── services/ai/       # ai-engine: ONNX, /detect, /classify
+├── config/            # site.yaml, calibration
+├── docs/              # architecture, cameras, optics
 ├── docker-compose.yml
 └── README.md
 ```
@@ -243,19 +196,16 @@ Dron_monitoring/
 
 ## Быстрый старт
 
-> Проект в стадии проектирования. Каркас сервисов добавляется по мере разработки.
-
 ```bash
 git clone https://github.com/Andry495/Dron_monitoring.git
 cd Dron_monitoring
-
-# когда появится compose:
 cp config/.env.example .env
+cp config/site.example.yaml config/site.yaml
+# заполнить пароли ONVIF и координаты площадки
 docker compose up -d
 ```
 
-**Среда разработки:** виртуальная машина.  
-**Боевой узел:** мини-ПК в составе комплекса на площадке.
+**Разработка:** VM · **Бой:** мини-ПК на площадке.
 
 ---
 
@@ -263,23 +213,32 @@ docker compose up -d
 
 | Документ | Описание |
 |----------|----------|
-| [docs/architecture.md](docs/architecture.md) | Полная архитектура, геолокация, выбор камер |
-| [docs/cameras.md](docs/cameras.md) | Конкретные модели и цены |
-| [docs/optics-and-range.md](docs/optics-and-range.md) | Оптика, дальность, триангуляция |
-| [config/](config/) | Примеры конфигурации |
+| [docs/architecture.md](docs/architecture.md) | Архитектура v1 |
+| [docs/cameras.md](docs/cameras.md) | BOM и цены |
+| [docs/camera-comparison.md](docs/camera-comparison.md) | Сравнение моделей камер |
+| [docs/infrastructure-comparison.md](docs/infrastructure-comparison.md) | ПК, switch, ai-engine CPU/GPU |
+| [docs/optics-and-range.md](docs/optics-and-range.md) | Дальности обнаружения |
+| [docs/alternatives.md](docs/alternatives.md) | Отложенные варианты (fisheye, DIY, ESP32) |
+| [docs/dead-zones.md](docs/dead-zones.md) | Мёртвые зоны Sky + PTZ |
+| [docs/turret.md](docs/turret.md) | Турель: пневмосеть, наведение до 50 m |
+| [docs/turret-ballistics.md](docs/turret-ballistics.md) | Баллистика и упреждение |
+| [config/site.example.yaml](config/site.example.yaml) | Конфиг площадки |
+| [config/turret.example.yaml](config/turret.example.yaml) | Конфиг турели |
 
 ---
 
 ## Roadmap
 
-- [ ] Каркас `monitor-core` + Docker Compose
-- [ ] MQTT-контракт и прошивка ESP32 (pan/tilt + энкодер)
-- [ ] Ingest RTSP + кольцевой буфер
-- [ ] Трекер + оркестратор (выбор 1–2 PTZ)
-- [ ] Модуль `geolocate` (триангуляция)
-- [ ] AI-engine: детекция + классификация (ONNX CPU)
-- [ ] Recorder + каталог + UI оператора
-- [ ] Интеграция с реальным железом на кубе
+- [x] Docker Compose: core + ai-engine
+- [ ] Ingest 4× sky + 4× PTZ RTSP
+- [ ] sky_watch: overlap merge, az/el
+- [ ] ONVIF orchestrator (2 PTZ primary/secondary)
+- [ ] ai-engine: /detect, /classify (ONNX CPU)
+- [ ] geolocate: триангуляция + zoom FOV table
+- [ ] recorder + каталог + UI оператора
+- [ ] Калибровка на стенде (1 PTZ + 4 sky)
+- [ ] Карта мёртвых зон: облёт / симуляция → `data/calibration/dead_zones_*.json`
+- [ ] **Турель (опц.):** turret-controller, полигон, баллистика сети
 
 ---
 

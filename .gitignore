@@ -39,3 +39,7 @@ models/*.pt
 # Firmware build
 firmware/**/build/
 firmware/**/.pio/
+
+# Node (svg2png script)
+node_modules/
+package-lock.json

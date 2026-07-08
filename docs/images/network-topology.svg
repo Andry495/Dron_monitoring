@@ -1,42 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Segoe UI, Arial, sans-serif">
-  <rect width="900" height="520" fill="#0f172a"/>
-  <text x="450" y="36" fill="#f8fafc" font-size="22" text-anchor="middle" font-weight="700">!5BL :><?;5:A0  switch 12p (157 PoE)</text>
-  <text x="450" y="58" fill="#94a3b8" font-size="13" text-anchor="middle">8B0=85 >B45;L=>: :0<5@K, ESP32, <>B>@K 12V, <8=8-</text>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="900" height="500" fill="#0f172a"/>
+  <text x="450" y="32" fill="#f8fafc" font-size="20" text-anchor="middle" font-weight="700">???? v1 — 9 ?????? ??????</text>
 
-  <rect x="350" y="230" width="200" height="80" rx="10" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
-  <text x="450" y="265" fill="#f8fafc" font-size="16" text-anchor="middle" font-weight="600">Switch 12p</text>
-  <text x="450" y="288" fill="#cbd5e1" font-size="12" text-anchor="middle">192.168.10.0/24</text>
+  <rect x="350" y="220" width="200" height="70" rx="8" fill="#334155" stroke="#94a3b8"/>
+  <text x="450" y="252" fill="#f8fafc" font-size="14" text-anchor="middle" font-weight="600">Switch 12p</text>
+  <text x="450" y="272" fill="#cbd5e1" font-size="11" text-anchor="middle">??? PoE</text>
 
-  <rect x="60" y="235" width="130" height="70" rx="8" fill="#0f766e" stroke="#5eead4" stroke-width="2"/>
-  <text x="125" y="265" fill="#ecfeff" font-size="14" text-anchor="middle" font-weight="600"><8=8-</text>
-  <text x="125" y="285" fill="#ccfbf1" font-size="11" text-anchor="middle">.10 · core+MQTT</text>
+  <rect x="60" y="225" width="120" height="60" rx="6" fill="#0f766e" stroke="#5eead4"/>
+  <text x="120" y="258" fill="#ecfeff" font-size="12" text-anchor="middle">mini-PC .10</text>
 
-  <g font-size="11" fill="#e2e8f0">
-    <rect x="620" y="70" width="120" height="50" rx="6" fill="#7c3aed" stroke="#c4b5fd"/><text x="680" y="100" text-anchor="middle">C?>; .11</text>
-    <rect x="620" y="140" width="120" height="50" rx="6" fill="#2563eb" stroke="#93c5fd"/><text x="680" y="170" text-anchor="middle">PTZ N .12</text>
-    <rect x="750" y="140" width="120" height="50" rx="6" fill="#2563eb" stroke="#93c5fd"/><text x="810" y="170" text-anchor="middle">PTZ E .13</text>
-    <rect x="620" y="210" width="120" height="50" rx="6" fill="#2563eb" stroke="#93c5fd"/><text x="680" y="240" text-anchor="middle">PTZ S .14</text>
-    <rect x="750" y="210" width="120" height="50" rx="6" fill="#2563eb" stroke="#93c5fd"/><text x="810" y="240" text-anchor="middle">PTZ W .15</text>
-
-    <rect x="620" y="300" width="120" height="44" rx="6" fill="#b45309" stroke="#fdba74"/><text x="680" y="327" text-anchor="middle">ESP N .22</text>
-    <rect x="750" y="300" width="120" height="44" rx="6" fill="#b45309" stroke="#fdba74"/><text x="810" y="327" text-anchor="middle">ESP E .23</text>
-    <rect x="620" y="360" width="120" height="44" rx="6" fill="#b45309" stroke="#fdba74"/><text x="680" y="387" text-anchor="middle">ESP S .24</text>
-    <rect x="750" y="360" width="120" height="44" rx="6" fill="#b45309" stroke="#fdba74"/><text x="810" y="387" text-anchor="middle">ESP W .25</text>
+  <g font-size="10" fill="#e2e8f0">
+    <rect x="620" y="60" width="110" height="36" rx="4" fill="#22c55e" stroke="#86efac"/><text x="675" y="82" text-anchor="middle">Sky .11–.14</text>
+    <rect x="620" y="110" width="110" height="36" rx="4" fill="#2563eb" stroke="#93c5fd"/><text x="675" y="132" text-anchor="middle">PTZ .21–.24</text>
+    <rect x="740" y="60" width="110" height="86" rx="4" fill="#1e293b" stroke="#475569"/>
+    <text x="795" y="95" text-anchor="middle" fill="#94a3b8">4+4 ??????</text>
+    <text x="795" y="115" text-anchor="middle" fill="#94a3b8">??? ESP32</text>
+    <text x="795" y="135" text-anchor="middle" fill="#94a3b8">????? 11–12</text>
+    <text x="795" y="150" text-anchor="middle" fill="#64748b">??????/uplink</text>
   </g>
-
-  <rect x="620" y="430" width="250" height="44" rx="6" fill="#1e293b" stroke="#475569"/>
-  <text x="745" y="457" fill="#94a3b8" font-size="12" text-anchor="middle">?>@BK 1112: @575@2 / uplink</text>
 
   <g stroke="#64748b" stroke-width="2">
-    <line x1="190" y1="270" x2="350" y2="270"/>
-    <line x1="550" y1="250" x2="620" y2="95"/>
-    <line x1="550" y1="255" x2="620" y2="165"/>
-    <line x1="550" y1="260" x2="620" y2="235"/>
-    <line x1="550" y1="265" x2="750" y2="165"/>
-    <line x1="550" y1="270" x2="750" y2="235"/>
-    <line x1="550" y1="280" x2="680" y2="300"/>
-    <line x1="550" y1="285" x2="810" y2="300"/>
-    <line x1="550" y1="290" x2="680" y2="360"/>
-    <line x1="550" y1="295" x2="810" y2="360"/>
+    <line x1="180" y1="255" x2="350" y2="255"/>
+    <line x1="550" y1="240" x2="620" y2="78"/>
+    <line x1="550" y1="250" x2="620" y2="128"/>
   </g>
+
+  <rect x="60" y="360" width="780" height="100" rx="6" fill="#1e293b" stroke="#475569"/>
+  <text x="450" y="390" fill="#94a3b8" font-size="11" text-anchor="middle">192.168.10.0/24 · ??????????? IP · ??????? ????? 12 V ????????</text>
+  <text x="450" y="415" fill="#64748b" font-size="10" text-anchor="middle">????? 2–5: Sky N/E/S/W · ????? 6–9: PTZ NE/SE/SW/NW · ???? 1: mini-PC</text>
+  <text x="450" y="440" fill="#64748b" font-size="10" text-anchor="middle">RTSP ingest + ONVIF control — ?????? ?????? LAN</text>
 </svg>
