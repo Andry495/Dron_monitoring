@@ -3,9 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "images:compose": "python scripts/compose-diagrams.py",
     "images:svgs": "node scripts/write-svgs.mjs",
     "images:png": "node scripts/svg2png.mjs",
-    "images": "npm run images:svgs && npm run images:png"
+    "images": "npm run images:compose"
+  },
+  "dependencies": {
+    "pillow": "^11.0.0"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2"
