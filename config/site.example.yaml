@@ -65,7 +65,7 @@ cube:
   half_size_m: 0.5
   ptz_mount_height_m: 1.2
   dome_height_m: 1.8
-  # Подвесной монтаж: в home ось камеры направлена вниз (перпендикулярно верхней грани)
-  mount_orientation: pendant_down
-  home_tilt_deg: 0        # 0 = строго вниз; рабочий tilt задаётся прошивкой/конфигом
-  operational_tilt_min_deg: 15   # минимальный наклон к небу от home
+  # Камеры на верхней грани куба; в home ось направлена вверх (на небо)
+  mount_orientation: upward
+  home_tilt_deg: 90        # 90° = вертикально вверх (зенит)
+  operational_tilt_max_deg: 30   # отклонение от зенита к горизонту при наведении
