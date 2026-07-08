@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 480" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="up" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <path d="M0,10 L5,0 L10,10 Z" fill="#38bdf8"/>
+    </marker>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#082f49"/>
+      <stop offset="45%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+  </defs>
+  <rect width="760" height="480" fill="url(#bg)"/>
+
+  <text x="380" y="34" fill="#e2e8f0" font-size="22" text-anchor="middle" font-weight="700">84 A1>:C  :0<5@K A<>B@OB 225@E</text>
+  <text x="380" y="56" fill="#94a3b8" font-size="14" text-anchor="middle">Home: 75=8B. Pan/tilt >B:;>=ONB >AL : F5;8 C 3>@87>=B0.</text>
+
+  <!-- sky -->
+  <rect x="0" y="70" width="760" height="120" fill="#0c4a6e" opacity="0.35"/>
+  <line x1="120" y1="190" x2="120" y2="95" stroke="#38bdf8" stroke-width="3" marker-end="url(#up)"/>
+  <line x1="380" y1="190" x2="380" y2="80" stroke="#38bdf8" stroke-width="3" marker-end="url(#up)"/>
+  <line x1="640" y1="190" x2="640" y2="95" stroke="#38bdf8" stroke-width="3" marker-end="url(#up)"/>
+  <text x="380" y="88" fill="#7dd3fc" font-size="14" text-anchor="middle">=51> / 75=8B</text>
+
+  <!-- tracking ray -->
+  <line x1="380" y1="210" x2="560" y2="130" stroke="#fbbf24" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="575" y="128" fill="#fbbf24" font-size="12">pan/tilt : F5;8</text>
+
+  <!-- cameras up -->
+  <g>
+    <rect x="98" y="190" width="44" height="56" rx="6" fill="#1d4ed8" stroke="#93c5fd" stroke-width="2"/>
+    <polygon points="120,178 132,198 108,198" fill="#bfdbfe"/>
+    <text x="120" y="262" fill="#cbd5e1" font-size="12" text-anchor="middle">PTZ</text>
+
+    <rect x="358" y="190" width="44" height="56" rx="6" fill="#7c3aed" stroke="#c4b5fd" stroke-width="2"/>
+    <polygon points="380,178 392,198 368,198" fill="#ede9fe"/>
+    <text x="380" y="262" fill="#cbd5e1" font-size="12" text-anchor="middle">C?>;</text>
+
+    <rect x="618" y="190" width="44" height="56" rx="6" fill="#1d4ed8" stroke="#93c5fd" stroke-width="2"/>
+    <polygon points="640,178 652,198 628,198" fill="#bfdbfe"/>
+    <text x="640" y="262" fill="#cbd5e1" font-size="12" text-anchor="middle">PTZ</text>
+  </g>
+
+  <!-- cube frame -->
+  <rect x="80" y="246" width="600" height="150" rx="6" fill="#1f2937" stroke="#64748b" stroke-width="3"/>
+  <text x="380" y="330" fill="#94a3b8" font-size="16" text-anchor="middle">:C1 / @0<0</text>
+
+  <!-- ground -->
+  <rect x="0" y="396" width="760" height="84" fill="#14532d" opacity="0.35"/>
+  <line x1="0" y1="396" x2="760" y2="396" stroke="#4ade80" stroke-width="2"/>
+  <text x="380" y="420" fill="#86efac" font-size="14" text-anchor="middle">?;>I04:0 / 75<;O</text>
+
+  <rect x="30" y="440" width="700" height="28" rx="6" fill="#0f172a" stroke="#334155"/>
+  <text x="380" y="458" fill="#94a3b8" font-size="12" text-anchor="middle">0<5@K =0  % 3@0=8 :C10. AL ² 2A5340 >B =0?@02;5=8O «225@E >B ?;>I04:8», =5 2=87.</text>
+</svg>
