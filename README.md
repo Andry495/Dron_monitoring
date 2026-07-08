@@ -264,6 +264,7 @@ docker compose up -d
 | Документ | Описание |
 |----------|----------|
 | [docs/architecture.md](docs/architecture.md) | Полная архитектура, геолокация, выбор камер |
+| [docs/cameras.md](docs/cameras.md) | Конкретные модели и цены |
 | [config/](config/) | Примеры конфигурации |
 
 ---
