@@ -15,20 +15,32 @@
 
 > **Камеры:** [camera-comparison.md](camera-comparison.md)  
 > **ПК / switch / ai-engine:** [infrastructure-comparison.md](infrastructure-comparison.md)  
-> **Мёртвые зоны:** [dead-zones.md](dead-zones.md)
+> **Мёртвые зоны:** [dead-zones.md](dead-zones.md) (cube) · [deployment-building.md](deployment-building.md) (здание)
 
-Дополнительно: switch ~6.5k ₽, мини-ПК ~50k ₽, кабель, кронштейны V-slot, БП 12 V.
+Дополнительно: switch ~6.5k ₽, мини-ПК ~50k ₽, кабель, кронштейны, БП 12 V.
+
+---
+
+## Варианты монтажа
+
+| Вариант | Где 8 камер | Где мини-ПК | Конфиг |
+|---------|-------------|-------------|--------|
+| **building_corners** | Углы крыши/здания | Купол-hub по центру | `site.building.example.yaml` |
+| **cube_compact** | Верхняя грань куба 1×1 m | В кубе или рядом | `site.example.yaml` |
+
+Модели камер **одинаковые**; меняются только кронштейны, кабельная длина и `offset_en_m` в конфиге.
 
 ### Инфраструктура (не камеры)
 
-| Позиция | Спецификация | Qty |
-|---------|--------------|-----|
+| Позиция | Спецификация | Qty | Примечание |
+|---------|--------------|-----|------------|
 | Switch | 12p Gigabit, без PoE | 1 | TP-Link TL-SG1016D ~6.5k |
 | мини-ПК | i5-12600H, 16 GB, SSD 512 GB | 1 | ~50k, CPU ai-engine |
 | БП 12 V | 10–15 A, разводка на камеры | 1 |
-| Кабель | Cat5e/Cat6 outdoor | 8 |
-| Кронштейны | V-slot / 3D-печать | 8 |
-| Куб / рама | V-slot 20×20, ~1 m³ | 1 |
+| Кабель | Cat5e/Cat6 outdoor | 8× | До switch (длиннее на здании) |
+| Кронштейны | кровельные / V-slot | 8 | По варианту монтажа |
+| Куб / рама | V-slot ~1 m³ | 0–1 | Только cube_compact |
+| Купол-hub | IP54, ПК + switch | 0–1 | Только building_corners, **без камер** |
 
 ---
 
@@ -48,9 +60,15 @@
 
 ### Монтаж
 
+**cube_compact:**
 - Позиция: **середина** каждой стороны верхней грани куба (N, E, S, W).
 - Ось **вверх**, наклон **15–35°** к своему сектору.
-- **Overlap** с соседними sky: **15–25%** HFOV.
+
+**building_corners:**
+- Позиция: **угол здания** (NE/SE/SW/NW), `sector_az_deg` 45° / 135° / …
+- Наклон **25–35°** наружу и вверх; `offset_en_m` в `site.yaml`.
+
+**Общее:** overlap с соседними sky **15–25%** HFOV.
 
 ### Альтернатива (не v1)
 
@@ -77,9 +95,11 @@ Hikvision DS-2CD2T86G2-4I(2.8mm) — 8 MP, +15–25% дальность motion.
 
 ### Монтаж
 
-- Позиция: **углы** верхней грани куба (NW, NE, SE, SW).
-- Home: ось **▲ вверх** (зенит).
-- Базовый сектор привязан к N/E/S/W через калибровку.
+**cube_compact:** углы верхней грани куба; `offset_en_m` ~±0.5 m от центра.
+
+**building_corners:** углы крыши; `offset_en_m` по габаритам здания (см. [site.building.example.yaml](../config/site.building.example.yaml)).
+
+**Общее:** home ось **▲ вверх** (зенит); `base_az_deg` по диагонали угла.
 
 ### Управление (v1)
 
@@ -102,9 +122,9 @@ Hikvision DS-2CD2T86G2-4I(2.8mm) — 8 MP, +15–25% дальность motion.
 
 | IP | Устройство | Порт switch |
 |----|------------|-------------|
-| 192.168.10.10 | мини-ПК | 1 |
-| .11 – .14 | Sky N, E, S, W | 2–5 |
-| .21 – .24 | PTZ NE, SE, SW, NW | 6–9 |
+| 192.168.10.10 | мини-ПК (в куполе или у куба) | 1 |
+| .11 – .14 | Sky (N/E/S/W или NE/SE/SW/NW) | 2–5 |
+| .21 – .24 | PTZ | 6–9 |
 | — | резерв / uplink | 10–12 |
 
 **9 портов** занято. Wi‑Fi отключить в настройках камер.
@@ -116,7 +136,7 @@ Hikvision DS-2CD2T86G2-4I(2.8mm) — 8 MP, +15–25% дальность motion.
 ### Этап 1 — стенд (до 4 шт.)
 
 - [ ] 1× DS-2DE4A425IWG-E — проверка ONVIF, RTSP 24 ч, зум-таблица
-- [ ] 1× DS-2CD2T47G2-L — overlap с макетом куба
+- [ ] 1× DS-2CD2T47G2-L — overlap на макете (куб или угол крыши)
 - [ ] мини-ПК или VM — ingest + ai-engine заглушка
 
 ### Этап 2 — комплект
@@ -124,7 +144,7 @@ Hikvision DS-2CD2T86G2-4I(2.8mm) — 8 MP, +15–25% дальность motion.
 - [ ] Sky × 4 (одинаковая партия)
 - [ ] PTZ × 4
 - [ ] Switch 12p
-- [ ] Кронштейны / печать V-slot
+- [ ] Кронштейны / купол или куб
 
 ---
 
@@ -142,3 +162,4 @@ Hikvision DS-2CD2T86G2-4I(2.8mm) — 8 MP, +15–25% дальность motion.
 
 - [Hikvision DS-2DE4A425IWG-E](https://us-legacy.hikvision.com/en/products/cameras/network-ptz-camera/value-series/ir/outdoor/4-mp-25-x-network-ir-ptz-camera-smart)
 - [optics-and-range.md](optics-and-range.md)
+- [deployment-building.md](deployment-building.md)

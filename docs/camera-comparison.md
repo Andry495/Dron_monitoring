@@ -53,7 +53,7 @@
 
 **Рекомендация:** оставить **DS-2CD2T47G2-L**. Если бюджет позволяет — рассмотреть **DS-2CD2T86G2-4I** только на sky (PTZ не менять).
 
-**Мёртвые зоны** компоновки 4× Sky + 4× PTZ: [dead-zones.md](dead-zones.md) (швы на диагоналях, зонт куба, гео над центром).
+**Мёртвые зоны** компоновки 4× Sky + 4× PTZ: [dead-zones.md](dead-zones.md) (cube_compact) · [deployment-building.md](deployment-building.md) §7 (building_corners).
 
 ---
 

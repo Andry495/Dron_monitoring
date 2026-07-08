@@ -1,0 +1,22 @@
+[project]
+name = "ai-engine"
+version = "0.1.0"
+description = "Dron Monitoring — ONNX inference service (stub until models)"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "pydantic>=2.10.0",
+    "pydantic-settings>=2.6.0",
+]
+
+[project.scripts]
+ai-engine = "ai_engine.__main__:main"
+
+[build-system]
+requires = ["setuptools>=75.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ai_engine*"]

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dron Monitoring — консоль оператора</title>
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Dron Monitoring</h1>
+    <div class="mode-badge" id="modeBadge">live</div>
+    <div class="status-pill" id="statusPill">—</div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="overview">Обзор</button>
+    <button class="tab" data-tab="map">Карта</button>
+    <button class="tab" data-tab="calibration">Калибровка</button>
+    <button class="tab" data-tab="simulation">Симуляция</button>
+    <button class="tab" data-tab="settings">Настройки</button>
+  </nav>
+
+  <main>
+    <section id="panel-overview" class="panel active">
+      <div class="cards">
+        <div class="card"><span class="label">Треки</span><span class="value" id="statTracks">0</span></div>
+        <div class="card"><span class="label">Цели</span><span class="value" id="statTargets">0</span></div>
+        <div class="card"><span class="label">Sky</span><span class="value" id="statSky">0</span></div>
+        <div class="card"><span class="label">PTZ</span><span class="value" id="statPtz">0</span></div>
+        <div class="card"><span class="label">Турели</span><span class="value" id="statTurrets">0</span></div>
+      </div>
+      <div class="split">
+        <div>
+          <h2>Активные треки</h2>
+          <table class="data-table" id="tracksTable">
+            <thead><tr><th>ID</th><th>Класс</th><th>Conf</th><th>Az</th><th>El</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div>
+          <h2>Геолокация</h2>
+          <table class="data-table" id="targetsTable">
+            <thead><tr><th>ID</th><th>Класс</th><th>ENU</th><th>Conf</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-map" class="panel">
+      <div class="map-toolbar">
+        <label><input type="checkbox" id="showTrails" checked /> Траектории</label>
+        <label><input type="checkbox" id="showLabels" checked /> Подписи</label>
+        <span class="hint">Вид сверху (ENU), центр — hub площадки</span>
+      </div>
+      <canvas id="mapCanvas" width="960" height="560"></canvas>
+      <div class="legend" id="mapLegend"></div>
+    </section>
+
+    <section id="panel-calibration" class="panel">
+      <p class="hint">Автоматические мастера калибровки. Результаты сохраняются в <code>data/calibration/</code>.</p>
+      <div class="calib-grid">
+        <button class="btn" data-scope="sky_overlap">Sky overlap</button>
+        <button class="btn" data-scope="ptz_zoom">PTZ zoom curve</button>
+        <button class="btn" data-scope="site_origin">Site origin / ENU</button>
+        <button class="btn" data-scope="turret_boresight">Turret bore-sight</button>
+      </div>
+      <div id="calibJob" class="calib-job hidden">
+        <h3 id="calibTitle">—</h3>
+        <ul id="calibSteps"></ul>
+        <pre id="calibReco"></pre>
+      </div>
+    </section>
+
+    <section id="panel-simulation" class="panel">
+      <p class="hint">Симулятор — отдельный модуль <code>scenario-simulator</code>. Переключите core в режим simulation для подачи детекций.</p>
+      <div class="sim-controls">
+        <select id="scenarioSelect">
+          <option value="drone_approach">Подлёт дрона</option>
+          <option value="multi_orbit">Несколько целей (орбита)</option>
+        </select>
+        <button class="btn primary" id="btnSimStart">Старт сценария</button>
+        <button class="btn" id="btnSimStop">Стоп</button>
+        <button class="btn" id="btnModeSim">Core → simulation</button>
+        <button class="btn" id="btnModeLive">Core → live</button>
+      </div>
+      <div id="simState" class="sim-state"></div>
+    </section>
+
+    <section id="panel-settings" class="panel">
+      <h2>Площадка</h2>
+      <pre id="siteLayout" class="code-block">Загрузка…</pre>
+      <h2>Турели</h2>
+      <pre id="turretList" class="code-block">Загрузка…</pre>
+    </section>
+  </main>
+
+  <script src="/assets/map.js"></script>
+  <script src="/assets/app.js"></script>
+</body>
+</html>

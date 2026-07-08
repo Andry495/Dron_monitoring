@@ -1,18 +1,49 @@
 # Турель — конфигурация
 # cp config/turret.example.yaml config/turret.yaml
+#
+# Турель — отдельный модуль: может стоять вне куба наблюдения,
+# но обязана быть привязана к той же системе координат (site ENU).
 
 turret:
   id: turret-01
   enabled: false          # true только после полигона
   ip: 192.168.10.30
   api_port: 8030
+  # standalone: true — автономный режим (локальная камера), bind с core опционален
+  standalone_capable: true
+
+# --- Привязка к площадке monitor-core ---
+# site_id ДОЛЖЕН совпадать с site.name в config/site.yaml
+site_binding:
+  site_id: cube-01          # ДОЛЖЕН совпадать с site.name (cube-01 или building-01)
+  required: true          # отклонять треки при несовпадении site_id
+  # Origin площадки (копия из site.yaml или уточнение после съёмки)
+  origin_lat: 0.0
+  origin_lon: 0.0
+  origin_alt_m: 0.0
+  magnetic_declination_deg: 0.0
+  # Смещение оси pan/tilt от site origin в ENU [E, N, U] (м)
+  offset_enu_m: [0.0, 0.0, 0.0]
+  base_az_deg: 0.0        # нуль pan → истинный север (после калибровки)
 
 mount:
-  # ENU смещение узла pan/tilt от site origin (м)
-  offset_enu_m: [0.0, 0.0, 0.0]
-  base_az_deg: 0          # привязка нуля pan к северу
   park_az_deg: 0
   park_el_deg: 45
+
+# --- Калибровка наведения (полигон) ---
+aim_calibration:
+  # Смещение нуля энкодеров относительно истинных углов
+  pan_zero_offset_deg: 0.0
+  tilt_zero_offset_deg: 0.0
+  # Оптическая ось камеры vs ось ствола (bore-sight)
+  bore_offset_az_deg: 0.0
+  bore_offset_el_deg: 0.0
+  # Поправка az от elevation (люфт/монтаж), опционально
+  az_correction:
+    - { at_el_deg: 30, delta_az_deg: 0.0 }
+    - { at_el_deg: 60, delta_az_deg: 0.0 }
+  calibrated_at: null     # "2026-08-01" после полигона
+  calibrated_by: null
 
 engagement:
   range_min_m: 10
@@ -28,9 +59,6 @@ camera:
   rtsp_main: rtsp://192.168.10.31:554/Streaming/Channels/101
   fps: 30
   hfov_deg: 30
-  # смещение оптической оси относительно ствола (град)
-  bore_offset_az_deg: 0.0
-  bore_offset_el_deg: 0.0
 
 pneumatics:
   pressure_min_bar: 7.5
@@ -42,7 +70,6 @@ ballistics:
   net_open_time_s: 0.25
   system_latency_s: 0.05
   drag_factor: 0.9
-  # диаметр раскрытой сети по дальности (калибровка)
   net_diameter_m:
     - { range_m: 10, diameter_m: 2.5 }
     - { range_m: 25, diameter_m: 3.5 }
@@ -57,7 +84,7 @@ tracking:
 safety:
   require_physical_arm: true
   heartbeat_timeout_ms: 500
-  el_min_deg: 5           # не стрелять в землю
+  el_min_deg: 5
   el_max_deg: 80
   sector_az_min_deg: 0
   sector_az_max_deg: 360

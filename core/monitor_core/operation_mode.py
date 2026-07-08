@@ -1,0 +1,8 @@
+from __future__ import annotations
+
+from enum import StrEnum
+
+
+class OperationMode(StrEnum):
+    LIVE = "live"
+    SIMULATION = "simulation"

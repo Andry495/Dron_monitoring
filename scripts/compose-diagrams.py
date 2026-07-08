@@ -1,4 +1,9 @@
-"""Compose photorealistic diagram bases + Cyrillic labels (Pillow)."""
+"""Сборка PNG для документации — единственный активный генератор.
+
+Политика: docs/diagram-generation.md
+  1) docs/images/_base/*-base.png  — AI-рендер без текста
+  2) этот скрипт (Pillow + Arial)  — кириллические подписи → docs/images/*.png
+"""
 from __future__ import annotations
 
 import os

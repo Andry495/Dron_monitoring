@@ -94,6 +94,29 @@ sequenceDiagram
 
 ## Аппаратная компоновка
 
+Два типовых варианта (одинаковое ПО, разный `site.yaml`):
+
+| Вариант | Монтаж | Конфиг |
+|---------|--------|--------|
+| **Здание** (стационар) | 4 угла крыши (sky+PTZ), **купол-hub по центру** | `site.building.example.yaml` |
+| **Куб** (переносной) | 4 sky + 4 PTZ на верхней грани 1×1 m | `site.example.yaml` |
+
+Подробно: [docs/deployment-building.md](docs/deployment-building.md).
+
+### Здание (building_corners)
+
+<p align="center">
+  <img src="docs/images/building-top-view.png" alt="Углы здания + купол по центру" width="720">
+</p>
+
+| Параметр | Sky × 4 | PTZ × 4 |
+|----------|---------|---------|
+| Монтаж | Углы крыши NE/SE/SW/NW | Те же углы (выше или на мачте) |
+| Hub | Купол по центру — **только** mini-PC + switch | — |
+| Origin ENU | Центр купола | `offset_en_m` до каждого угла |
+
+### Куб (cube_compact)
+
 Камеры на **верхней грани** куба, ось **▲ вверх** (зенит). Sky — середины сторон; PTZ — углы.
 
 <p align="center">
@@ -101,7 +124,7 @@ sequenceDiagram
 </p>
 
 <p align="center">
-  <img src="docs/images/cube-top-view.png" alt="Вид сверху: 4 sky + 4 PTZ" width="720">
+  <img src="docs/images/cube-top-view.png" alt="Куб: 4 sky + 4 PTZ" width="720">
 </p>
 
 ```mermaid
@@ -137,7 +160,7 @@ flowchart TB
 
 | # | Устройство | IP (пример) |
 |---|------------|-------------|
-| — | мини-ПК | 192.168.10.10 |
+| — | мини-ПК (в куполе или у куба) | 192.168.10.10 |
 | 1–4 | Sky N/E/S/W | .11 – .14 |
 | 5–8 | PTZ NE/SE/SW/NW | .21 – .24 |
 | 9–10 | Резерв / uplink | — |
@@ -184,10 +207,15 @@ flowchart TB
 
 ```text
 Dron_monitoring/
-├── core/              # ingest, sky_watch, tracker, orchestrator, onvif, geolocate, api
-├── services/ai/       # ai-engine: ONNX, /detect, /classify
-├── config/            # site.yaml, calibration
-├── docs/              # architecture, cameras, optics
+├── core/                    # monitor-core: pipeline, api, calibration
+├── services/
+│   ├── ai/                  # ai-engine: ONNX, /detect, /classify
+│   ├── simulator/           # scenario-simulator (синтетические цели)
+│   ├── operator-ui/         # веб-консоль + прокси API
+│   └── turret-sim/          # эмулятор firmware турели
+├── ui/                      # статика консоли оператора (карта, калибровка)
+├── config/                  # site.yaml, calibration
+├── docs/
 ├── docker-compose.yml
 └── README.md
 ```
@@ -200,10 +228,19 @@ Dron_monitoring/
 git clone https://github.com/Andry495/Dron_monitoring.git
 cd Dron_monitoring
 cp config/.env.example .env
-cp config/site.example.yaml config/site.yaml
-# заполнить пароли ONVIF и координаты площадки
+# стационар на здании (рекомендуется для неподвижного объекта):
+cp config/site.building.example.yaml config/site.yaml
+# или переносной куб:
+# cp config/site.example.yaml config/site.yaml
+# заполнить пароли ONVIF, lat/lon, offset_en_m
 docker compose up -d
+
+# Консоль оператора + симулятор (без камер):
+docker compose --profile ui up -d
+# UI: http://localhost:3000
 ```
+
+В симуляции: вкладка **Симуляция** → старт сценария → **Core → simulation** — треки и карта из `scenario-simulator`.
 
 **Разработка:** VM · **Бой:** мини-ПК на площадке.
 
@@ -221,8 +258,12 @@ docker compose up -d
 | [docs/alternatives.md](docs/alternatives.md) | Отложенные варианты (fisheye, DIY, ESP32) |
 | [docs/dead-zones.md](docs/dead-zones.md) | Мёртвые зоны Sky + PTZ |
 | [docs/turret.md](docs/turret.md) | Турель: пневмосеть, наведение до 50 m |
+| [docs/operator-ui.md](docs/operator-ui.md) | Консоль оператора, симуляция, калибровка |
+| [docs/diagram-generation.md](docs/diagram-generation.md) | **Политика генерации иллюстраций** (обязательно) |
 | [docs/turret-ballistics.md](docs/turret-ballistics.md) | Баллистика и упреждение |
-| [config/site.example.yaml](config/site.example.yaml) | Конфиг площадки |
+| [config/site.example.yaml](config/site.example.yaml) | Конфиг площадки (куб) |
+| [config/site.building.example.yaml](config/site.building.example.yaml) | Конфиг: углы здания + купол по центру |
+| [docs/deployment-building.md](docs/deployment-building.md) | Стационарная компоновка |
 | [config/turret.example.yaml](config/turret.example.yaml) | Конфиг турели |
 
 ---
@@ -230,13 +271,16 @@ docker compose up -d
 ## Roadmap
 
 - [x] Docker Compose: core + ai-engine
+- [x] Консоль оператора (`operator-ui`) + карта ENU, WebSocket
+- [x] Модуль симулятора (`scenario-simulator`) + режим `PIPELINE_MODE=simulation`
+- [x] API автокалибровки (мастера → `data/calibration/`)
 - [ ] Ingest 4× sky + 4× PTZ RTSP
 - [ ] sky_watch: overlap merge, az/el
 - [ ] ONVIF orchestrator (2 PTZ primary/secondary)
 - [ ] ai-engine: /detect, /classify (ONNX CPU)
 - [ ] geolocate: триангуляция + zoom FOV table
-- [ ] recorder + каталог + UI оператора
-- [ ] Калибровка на стенде (1 PTZ + 4 sky)
+- [ ] recorder + каталог
+- [ ] Калибровка на стенде (1 PTZ + 4 sky) — запись в yaml из UI
 - [ ] Карта мёртвых зон: облёт / симуляция → `data/calibration/dead_zones_*.json`
 - [ ] **Турель (опц.):** turret-controller, полигон, баллистика сети
 

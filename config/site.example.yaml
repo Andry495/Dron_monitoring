@@ -1,5 +1,6 @@
-# Площадка — комплект v1
+# Площадка — комплект v1 (компактный куб)
 # Скопировать в config/site.yaml
+# Стационар на здании: config/site.building.example.yaml — docs/deployment-building.md
 
 site:
   name: cube-01
@@ -8,6 +9,10 @@ site:
   altitude_m: 0
   magnetic_declination_deg: 0
   orientation_deg: 0  # 0 = грань N на истинный север
+
+deployment:
+  type: cube_compact
+  mobile: true
 
 network:
   subnet: 192.168.10.0/24
@@ -111,3 +116,15 @@ ptz_calibration:
     - { zoom: 0.0, hfov_deg: 53.3, vfov_deg: 30.6 }
     - { zoom: 0.5, hfov_deg: 8.0, vfov_deg: 4.5 }
     - { zoom: 1.0, hfov_deg: 2.6, vfov_deg: 1.5 }
+
+# --- Привязанные турели (0..N модулей перехвата) ---
+bound_turrets:
+  - id: turret-01
+    config: config/turret.yaml
+    enabled: false
+    optional: true
+  # пример второй турели на крупной площадке:
+  # - id: turret-02
+  #   config: config/turrets/turret-02.yaml
+  #   enabled: false
+  #   optional: true

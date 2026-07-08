@@ -68,6 +68,8 @@
 
 ### Схемы (общие)
 
+> Иллюстрации PNG — только по [diagram-generation.md](diagram-generation.md): AI `_base` + Pillow кириллица.
+
 | Файл | Содержание |
 |------|------------|
 | [building-top-view.png](images/building-top-view.png) | building_corners: углы + купол |

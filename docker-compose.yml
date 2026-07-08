@@ -19,6 +19,10 @@ services:
       - "${API_PORT:-8080}:8080"
     depends_on:
       - ai-engine
+    environment:
+      - DRY_RUN=${DRY_RUN:-true}
+      - PIPELINE_MODE=${PIPELINE_MODE:-live}
+      - SIMULATOR_URL=http://scenario-simulator:8070
     mem_limit: 1g
     logging:
       driver: json-file
@@ -47,6 +51,58 @@ services:
     #         - driver: nvidia
     #           count: 1
     #           capabilities: [gpu]
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  turret-sim:
+    profiles: ["sim", "turret"]
+    build:
+      context: ./services/turret-sim
+      dockerfile: Dockerfile
+    container_name: dron-monitoring-turret-sim
+    restart: unless-stopped
+    ports:
+      - "8030:8030"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  scenario-simulator:
+    profiles: ["sim", "ui"]
+    build:
+      context: ./services/simulator
+      dockerfile: Dockerfile
+    container_name: dron-monitoring-simulator
+    restart: unless-stopped
+    ports:
+      - "8070:8070"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  operator-ui:
+    profiles: ["ui"]
+    build:
+      context: .
+      dockerfile: services/operator-ui/Dockerfile
+    container_name: dron-monitoring-ui
+    restart: unless-stopped
+    ports:
+      - "${UI_PORT:-3000}:3000"
+    environment:
+      - CORE_URL=http://monitor-core:8080
+      - SIMULATOR_URL=http://scenario-simulator:8070
+      - UI_DIR=/app/ui
+    depends_on:
+      - monitor-core
+      - scenario-simulator
     logging:
       driver: json-file
       options:

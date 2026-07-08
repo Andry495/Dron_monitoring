@@ -1,0 +1,50 @@
+# Турель 01 — северная сторона площадки
+# cp config/turrets/turret-01.example.yaml config/turrets/turret-01.yaml
+
+turret:
+  id: turret-01
+  enabled: false
+  ip: 192.168.10.30
+  api_port: 8030
+  priority: 10
+  standalone_capable: true
+
+site_binding:
+  site_id: building-01
+  required: true
+  origin_lat: 0.0
+  origin_lon: 0.0
+  origin_alt_m: 0.0
+  magnetic_declination_deg: 0.0
+  offset_enu_m: [0.0, 8.0, 0.0]
+  base_az_deg: 0.0
+
+mount:
+  park_az_deg: 0
+  park_el_deg: 45
+
+aim_calibration:
+  pan_zero_offset_deg: 0.0
+  tilt_zero_offset_deg: 0.0
+  bore_offset_az_deg: 0.0
+  bore_offset_el_deg: 0.0
+  calibrated_at: null
+
+engagement:
+  range_min_m: 10
+  range_max_m: 50
+  allowed_classes: [drone]
+  min_class_confidence: 0.85
+
+camera:
+  id: turret_cam_01
+  ip: 192.168.10.31
+  rtsp_main: rtsp://192.168.10.31:554/Streaming/Channels/101
+
+safety:
+  heartbeat_timeout_ms: 500
+  sector_az_min_deg: 315
+  sector_az_max_deg: 135
+
+tracking:
+  track_loop_hz: 40

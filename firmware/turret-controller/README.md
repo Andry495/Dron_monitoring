@@ -14,6 +14,10 @@
 
 `firmware/ptz-controller/` — заготовка DIY для PTZ **куба** (не v1).
 
+## Привязка к monitor-core
+
+Турель — отдельный постамент, но **та же площадка** (`site_id`, ENU origin). При старте core шлёт `POST /v1/turret/bind`; прошивка хранит `offset_enu_m` и `aim_calibration`. Без bind треки отклоняются (если `site_binding.required`).
+
 ## Документация
 
 - [docs/turret.md](../../docs/turret.md)

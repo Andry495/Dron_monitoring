@@ -1,0 +1,21 @@
+---
+description: Правила генерации PNG-иллюстраций для docs/images
+globs:
+  - docs/images/**
+  - scripts/compose-diagrams.py
+  - scripts/deprecated/**
+alwaysApply: false
+---
+
+# Иллюстрации документации
+
+При создании или обновлении картинок в `docs/images/` **только** pipeline из [docs/diagram-generation.md](../docs/diagram-generation.md):
+
+1. **AI-рендер** → `docs/images/_base/{id}-base.png` (без текста на изображении)
+2. **Pillow** → `scripts/compose-diagrams.py` → `docs/images/{id}.png` (кириллица Arial)
+
+**Не использовать:** `write-svgs.mjs`, `svg2png.mjs`, плоские SVG для README/доков.
+
+Новая диаграмма: добавить `_base`, функцию в `compose-diagrams.py`, строку в реестр `diagram-generation.md`, закоммитить base + PNG.
+
+Промпт базы: photorealistic/isometric 3D, dark tech, `NO text NO letters NO labels`.
