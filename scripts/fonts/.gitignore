@@ -1,0 +1,5 @@
+# Шрифты для PNG (не в git — лицензия Microsoft)
+# Перед npm run images:
+#   copy %WINDIR%\Fonts\arial.ttf scripts\fonts\Arial.ttf
+#   copy %WINDIR%\Fonts\arialbd.ttf scripts\fonts\Arial-Bold.ttf
+*.ttf

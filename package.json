@@ -1,0 +1,13 @@
+{
+  "name": "dron-monitoring-docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "images:svgs": "node scripts/write-svgs.mjs",
+    "images:png": "node scripts/svg2png.mjs",
+    "images": "npm run images:svgs && npm run images:png"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2"
+  }
+}

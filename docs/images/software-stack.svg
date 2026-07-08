@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="Arial, sans-serif">
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="45%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#082f49"/>
+    </linearGradient>
+    <linearGradient id="cardTeal" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#14b8a6"/><stop offset="100%" stop-color="#0f766e"/></linearGradient>
+    <linearGradient id="cardPurple" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#6d28d9"/></linearGradient>
+    <linearGradient id="cardBlue" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+    <linearGradient id="cardOrange" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fb923c"/><stop offset="100%" stop-color="#c2410c"/></linearGradient>
+    <linearGradient id="cardGray" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#64748b"/><stop offset="100%" stop-color="#334155"/></linearGradient>
+    <linearGradient id="cardHub" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fcd34d"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+    <linearGradient id="skyG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4ade80"/><stop offset="100%" stop-color="#15803d"/></linearGradient>
+    <linearGradient id="ptzG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#1d4ed8"/></linearGradient>
+    <radialGradient id="skyZone" cx="50%" cy="40%" r="55%"><stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35"/><stop offset="100%" stop-color="#0ea5e9" stop-opacity="0"/></radialGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.45"/></filter>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#94a3b8"/></marker>
+  </defs>
+  <rect width="960" height="500" fill="url(#bg)"/>
+  <text x="480" y="36" fill="#e2e8f0" font-size="24" text-anchor="middle" font-weight="700">Программный стек v1</text>
+  
+  <rect x="45" y="96" width="190" height="90" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="40" y="90" width="190" height="90" rx="14" fill="url(#cardBlue)" stroke="#7dd3fc" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="135" y="129.5" fill="#fff" font-size="15" text-anchor="middle" font-weight="700">operator-ui</text>
+  <text x="135" y="145.5" fill="#f1f5f9" font-size="11" text-anchor="middle" font-weight="400">:3000</text>
+  
+  <rect x="255" y="96" width="190" height="90" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="250" y="90" width="190" height="90" rx="14" fill="url(#cardOrange)" stroke="#fdba74" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="345" y="129.5" fill="#fff" font-size="15" text-anchor="middle" font-weight="700">simulator</text>
+  <text x="345" y="145.5" fill="#f1f5f9" font-size="11" text-anchor="middle" font-weight="400">:8070</text>
+  
+  <rect x="465" y="96" width="190" height="90" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="460" y="90" width="190" height="90" rx="14" fill="url(#cardTeal)" stroke="#5eead4" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="555" y="129.5" fill="#fff" font-size="15" text-anchor="middle" font-weight="700">monitor-core</text>
+  <text x="555" y="145.5" fill="#f1f5f9" font-size="11" text-anchor="middle" font-weight="400">:8080</text>
+  
+  <rect x="675" y="96" width="190" height="90" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="670" y="90" width="190" height="90" rx="14" fill="url(#cardPurple)" stroke="#c4b5fd" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="765" y="129.5" fill="#fff" font-size="15" text-anchor="middle" font-weight="700">ai-engine</text>
+  <text x="765" y="145.5" fill="#f1f5f9" font-size="11" text-anchor="middle" font-weight="400">:8090</text>
+  <line x1="230" y1="135" x2="250" y2="135" stroke="#64748b" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="440" y1="135" x2="460" y2="135" stroke="#64748b" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="650" y1="135" x2="670" y2="135" stroke="#64748b" stroke-width="2.5" marker-end="url(#arr)"/>
+
+  <rect x="60" y="220" width="840" height="240" rx="16" fill="#111827" stroke="#475569" stroke-width="2" filter="url(#shadow)"/>
+  <text x="480" y="252" fill="#86efac" font-size="16" text-anchor="middle" font-weight="700">monitor-core — модули</text>
+  
+  <rect x="95" y="286" width="250" height="68" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="90" y="280" width="250" height="68" rx="14" fill="url(#cardGray)" stroke="#64748b" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="215" y="316" fill="#f8fafc" font-size="15" text-anchor="middle" font-weight="700">sky_watch / sim_feed</text>
+  
+  <rect x="375" y="286" width="250" height="68" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="370" y="280" width="250" height="68" rx="14" fill="url(#cardGray)" stroke="#64748b" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="495" y="316" fill="#f8fafc" font-size="15" text-anchor="middle" font-weight="700">tracker</text>
+  
+  <rect x="655" y="286" width="250" height="68" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="650" y="280" width="250" height="68" rx="14" fill="url(#cardGray)" stroke="#64748b" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="775" y="316" fill="#f8fafc" font-size="15" text-anchor="middle" font-weight="700">ptz orchestrator</text>
+  
+  <rect x="95" y="371" width="250" height="68" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="90" y="365" width="250" height="68" rx="14" fill="url(#cardGray)" stroke="#64748b" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="215" y="401" fill="#f8fafc" font-size="15" text-anchor="middle" font-weight="700">geolocate</text>
+  
+  <rect x="375" y="371" width="250" height="68" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="370" y="365" width="250" height="68" rx="14" fill="url(#cardGray)" stroke="#64748b" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="495" y="401" fill="#f8fafc" font-size="15" text-anchor="middle" font-weight="700">turret fleet</text>
+  
+  <rect x="655" y="371" width="250" height="68" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="650" y="365" width="250" height="68" rx="14" fill="url(#cardGray)" stroke="#64748b" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="775" y="401" fill="#f8fafc" font-size="15" text-anchor="middle" font-weight="700">calibration</text>
+  
+
+</svg>

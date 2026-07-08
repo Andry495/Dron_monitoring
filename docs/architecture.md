@@ -23,38 +23,59 @@
 
 ## 2. Физическая компоновка
 
-### Вид сверху
+Один и тот же комплект **4× sky + 4× PTZ** монтируется двумя способами (`deployment.type` в `site.yaml`):
+
+| Вариант | `deployment.type` | Где камеры | Где мини-ПК | Конфиг |
+|---------|-------------------|------------|-------------|--------|
+| **Стационар на здании** | `building_corners` | Углы крыши | **Купол-hub** по центру (без камер) | `site.building.example.yaml` |
+| **Компактный куб** | `cube_compact` | Верхняя грань 1×1 m | В кубе или рядом | `site.example.yaml` |
+
+Подробно про стационар: [deployment-building.md](deployment-building.md).
+
+### 2.1 building_corners (рекомендуется для здания)
 
 ```text
               N
-              │
+    [Sky+PTZ]────────────[Sky+PTZ]
+         │    ( купол )      │
+         │     hub PC        │
+    [Sky+PTZ]────────────[Sky+PTZ]
+```
+
+- ENU origin = центр купола на крыше.
+- База PTZ **10–40 m** → лучше триангуляция.
+- Схема: [building-top-view.png](images/building-top-view.png)
+
+### 2.2 cube_compact (переносной пост)
+
+```text
+              N
     [PTZ-NW]──[Sky-N]──[PTZ-NE]
          │               │
     [Sky-W]     куб     [Sky-E]
          │               │
     [PTZ-SW]──[Sky-S]──[PTZ-SE]
-              │
-              S
-
-  зелёный = Sky (движение)    синий = PTZ (зум + координаты)
 ```
-
-### Монтаж
 
 | Камера | Позиция | Home | Задача |
 |--------|---------|------|--------|
 | Sky N/E/S/W | Середина стороны верхней грани | ▲ + наклон к сектору | Движение |
 | PTZ × 4 | Углы верхней грани | ▲ зенит | Наведение, зум, геометрия |
 
-Куб ориентирован по сторонам света. GPS площадки + калибровка → WGS84.
+- Схемы: [cube-top-view.png](images/cube-top-view.png) · [cube-side-view.png](images/cube-side-view.png)
 
-### Схемы
+Ориентация по сторонам света. GPS площадки + калибровка → WGS84.
+
+### Схемы (общие)
 
 | Файл | Содержание |
 |------|------------|
-| [cube-top-view.png](images/cube-top-view.png) | 4 sky + 4 PTZ |
-| [cube-side-view.png](images/cube-side-view.png) | Вид сбоку ▲ |
+| [building-top-view.png](images/building-top-view.png) | building_corners: углы + купол |
+| [cube-top-view.png](images/cube-top-view.png) | cube_compact: 4 sky + 4 PTZ |
+| [cube-side-view.png](images/cube-side-view.png) | cube_compact: вид сбоку |
 | [system-overview.png](images/system-overview.png) | Обзор комплекса |
+| [software-stack.png](images/software-stack.png) | Программный стек и модули core |
+| [operator-console.png](images/operator-console.png) | Консоль оператора и симуляция |
 | [detection-flow.png](images/detection-flow.png) | Поток данных |
 | [network-topology.png](images/network-topology.png) | Сеть |
 | [dead-zones-top.png](images/dead-zones-top.png) | Мёртвые зоны: азимут |
@@ -179,8 +200,9 @@ flowchart LR
 | мини-ПК | i5-12600H, **16 GB RAM**, SSD 512 GB | 1 | CPU-only ai-engine; ~50k ₽ |
 | БП 12 V | 10–15 A, разводка на 8 камер | 1 | PTZ ~24 W каждая |
 | Кабель | Cat5e/Cat6 outdoor | 8× | До switch |
-| Кронштейны | V-slot / 3D-печать | 8 | Sky + PTZ на верхней грани |
-| Куб / рама | Алюминий V-slot 20×20, ~1 m³ | 1 | Ориентация по N/E/S/W |
+| Кронштейны | V-slot / 3D-печать / кровельные | 8 | Зависит от варианта |
+| Куб / рама | V-slot 20×20, ~1 m³ | 0–1 | **cube_compact** — да; **building_corners** — нет |
+| Купол-hub | IP54, мини-ПК + switch | 0–1 | **building_corners** — да; камеры не вешать |
 | ИБП (опц.) | На мини-ПК + switch | 1 | Автономность при сбое 220 V |
 
 ### ПО (на мини-ПК)
@@ -198,7 +220,10 @@ flowchart LR
 
 ```bash
 cp config/.env.example .env
-cp config/site.example.yaml config/site.yaml
+# стационар на здании:
+cp config/site.building.example.yaml config/site.yaml
+# или переносной куб:
+# cp config/site.example.yaml config/site.yaml
 docker compose up -d
 ```
 
@@ -223,7 +248,7 @@ VM — разработка с записанными RTSP; мини-ПК — б
 | R_max | 50 m |
 | Наведение | Грубо от core → точно камерой турели |
 | Упреждение | По `velocity_enu` + баллистика сети |
-| IP | .30 контроллер, .31 камера |
+| IP | .30/.31 turret-01, .32/.33 turret-02 (опц.) |
 
 ```mermaid
 flowchart LR
@@ -244,5 +269,6 @@ flowchart LR
 - [cameras.md](cameras.md)
 - [optics-and-range.md](optics-and-range.md)
 - [alternatives.md](alternatives.md) — fisheye, DIY, ESP32 (не v1)
-- [turret.md](turret.md) — турель с пневмосетью (опционально)
-- [dead-zones.md](dead-zones.md) — мёртвые зоны покрытия
+- [deployment-building.md](deployment-building.md) — стационар: углы здания + купол-hub
+- [turret.md](turret.md) — турель (опционально)
+- [dead-zones.md](dead-zones.md) — мёртвые зоны (cube_compact; building — см. deployment-building)

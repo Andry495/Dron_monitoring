@@ -1,52 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 540" font-family="Segoe UI, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 580" font-family="Arial, sans-serif">
+
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#082f49"/>
-      <stop offset="100%" stop-color="#0f172a"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="45%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#082f49"/>
     </linearGradient>
+    <linearGradient id="cardTeal" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#14b8a6"/><stop offset="100%" stop-color="#0f766e"/></linearGradient>
+    <linearGradient id="cardPurple" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#6d28d9"/></linearGradient>
+    <linearGradient id="cardBlue" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+    <linearGradient id="cardOrange" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fb923c"/><stop offset="100%" stop-color="#c2410c"/></linearGradient>
+    <linearGradient id="cardGray" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#64748b"/><stop offset="100%" stop-color="#334155"/></linearGradient>
+    <linearGradient id="cardHub" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fcd34d"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+    <linearGradient id="skyG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4ade80"/><stop offset="100%" stop-color="#15803d"/></linearGradient>
+    <linearGradient id="ptzG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#1d4ed8"/></linearGradient>
+    <radialGradient id="skyZone" cx="50%" cy="40%" r="55%"><stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35"/><stop offset="100%" stop-color="#0ea5e9" stop-opacity="0"/></radialGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.45"/></filter>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#94a3b8"/></marker>
   </defs>
-  <rect width="920" height="540" fill="url(#bg)"/>
-  <text x="460" y="36" fill="#f8fafc" font-size="22" text-anchor="middle" font-weight="700">Dron Monitoring � ???????? v1</text>
-  <text x="460" y="58" fill="#94a3b8" font-size="13" text-anchor="middle">4� sky fixed + 4� PTZ 25� + mini-PC (core) + ai-engine</text>
+  <rect width="960" height="580" fill="url(#bg)"/>
+  <text x="480" y="40" fill="#f8fafc" font-size="26" text-anchor="middle" font-weight="700">Dron Monitoring — комплект v1</text>
+  <text x="480" y="66" fill="#94a3b8" font-size="13" text-anchor="middle" font-weight="400">4× Sky fixed + 4× PTZ 25× · mini-PC · ai-engine · operator-ui · симулятор</text>
 
-  <ellipse cx="460" cy="115" rx="280" ry="45" fill="#0ea5e9" opacity="0.15"/>
-  <text x="460" y="112" fill="#7dd3fc" font-size="12" text-anchor="middle">????????? ????????????</text>
+  <ellipse cx="480" cy="118" rx="320" ry="50" fill="url(#skyZone)"/>
+  <text x="480" y="116" fill="#7dd3fc" font-size="14" text-anchor="middle" font-weight="700">зона обзора / видимости</text>
 
-  <rect x="280" y="145" width="360" height="200" rx="8" fill="#111827" stroke="#475569" stroke-width="2"/>
-  <text x="460" y="168" fill="#94a3b8" font-size="11" text-anchor="middle">??????? ????? ???? ?</text>
+  <rect x="250" y="145" width="460" height="230" rx="16" fill="#111827" stroke="#475569" stroke-width="3" filter="url(#shadow)"/>
+  <text x="480" y="172" fill="#94a3b8" font-size="12" text-anchor="middle" font-weight="400">периметр поста (cube_compact / building_corners)</text>
 
-  <circle cx="360" cy="200" r="14" fill="#22c55e"/><text x="360" y="225" fill="#86efac" font-size="9" text-anchor="middle">Sky-N</text>
-  <circle cx="560" cy="200" r="14" fill="#22c55e"/><text x="560" y="225" fill="#86efac" font-size="9" text-anchor="middle">Sky-E</text>
-  <circle cx="360" cy="280" r="14" fill="#22c55e"/><text x="360" y="305" fill="#86efac" font-size="9" text-anchor="middle">Sky-W</text>
-  <circle cx="560" cy="280" r="14" fill="#22c55e"/><text x="560" y="305" fill="#86efac" font-size="9" text-anchor="middle">Sky-S</text>
+  <g transform="translate(290,195)" filter="url(#shadow)">
+    <circle r="20" fill="url(#ptzG)" stroke="#93c5fd" stroke-width="2"/>
+    <polygon points="0,-14 10,9 -10,9" fill="#dbeafe"/>
+    <rect x="-7" y="9" width="14" height="7" rx="2" fill="#1e3a8a"/>
+    <text x="0" y="38" fill="#93c5fd" font-size="10" text-anchor="middle" font-weight="700">PTZ</text>
+  </g>
+  <g transform="translate(670,195)" filter="url(#shadow)">
+    <circle r="20" fill="url(#ptzG)" stroke="#93c5fd" stroke-width="2"/>
+    <polygon points="0,-14 10,9 -10,9" fill="#dbeafe"/>
+    <rect x="-7" y="9" width="14" height="7" rx="2" fill="#1e3a8a"/>
+    <text x="0" y="38" fill="#93c5fd" font-size="10" text-anchor="middle" font-weight="700">PTZ</text>
+  </g>
+  <g transform="translate(290,325)" filter="url(#shadow)">
+    <circle r="20" fill="url(#ptzG)" stroke="#93c5fd" stroke-width="2"/>
+    <polygon points="0,-14 10,9 -10,9" fill="#dbeafe"/>
+    <rect x="-7" y="9" width="14" height="7" rx="2" fill="#1e3a8a"/>
+    <text x="0" y="38" fill="#93c5fd" font-size="10" text-anchor="middle" font-weight="700">PTZ</text>
+  </g>
+  <g transform="translate(670,325)" filter="url(#shadow)">
+    <circle r="20" fill="url(#ptzG)" stroke="#93c5fd" stroke-width="2"/>
+    <polygon points="0,-14 10,9 -10,9" fill="#dbeafe"/>
+    <rect x="-7" y="9" width="14" height="7" rx="2" fill="#1e3a8a"/>
+    <text x="0" y="38" fill="#93c5fd" font-size="10" text-anchor="middle" font-weight="700">PTZ</text>
+  </g>
 
-  <circle cx="310" cy="175" r="16" fill="#2563eb"/><text x="310" y="158" fill="#93c5fd" font-size="9" text-anchor="middle">PTZ</text>
-  <circle cx="610" cy="175" r="16" fill="#2563eb"/>
-  <circle cx="310" cy="305" r="16" fill="#2563eb"/>
-  <circle cx="610" cy="305" r="16" fill="#2563eb"/>
+  <g transform="translate(400,230)" filter="url(#shadow)">
+    <circle r="18" fill="url(#skyG)" stroke="#86efac" stroke-width="2"/>
+    <polygon points="0,-12 8,7 -8,7" fill="#dcfce7"/>
+    <circle r="4" cy="2" fill="#14532d" opacity="0.4"/>
+    <text x="0" y="34" fill="#86efac" font-size="10" text-anchor="middle" font-weight="700">Sky-N</text>
+  </g>
+  <g transform="translate(560,230)" filter="url(#shadow)">
+    <circle r="18" fill="url(#skyG)" stroke="#86efac" stroke-width="2"/>
+    <polygon points="0,-12 8,7 -8,7" fill="#dcfce7"/>
+    <circle r="4" cy="2" fill="#14532d" opacity="0.4"/>
+    <text x="0" y="34" fill="#86efac" font-size="10" text-anchor="middle" font-weight="700">Sky-E</text>
+  </g>
+  <g transform="translate(400,300)" filter="url(#shadow)">
+    <circle r="18" fill="url(#skyG)" stroke="#86efac" stroke-width="2"/>
+    <polygon points="0,-12 8,7 -8,7" fill="#dcfce7"/>
+    <circle r="4" cy="2" fill="#14532d" opacity="0.4"/>
+    <text x="0" y="34" fill="#86efac" font-size="10" text-anchor="middle" font-weight="700">Sky-W</text>
+  </g>
+  <g transform="translate(560,300)" filter="url(#shadow)">
+    <circle r="18" fill="url(#skyG)" stroke="#86efac" stroke-width="2"/>
+    <polygon points="0,-12 8,7 -8,7" fill="#dcfce7"/>
+    <circle r="4" cy="2" fill="#14532d" opacity="0.4"/>
+    <text x="0" y="34" fill="#86efac" font-size="10" text-anchor="middle" font-weight="700">Sky-S</text>
+  </g>
 
-  <rect x="80" y="400" width="140" height="75" rx="8" fill="#0f766e" stroke="#5eead4"/>
-  <text x="150" y="428" fill="#ecfeff" font-size="13" text-anchor="middle" font-weight="600">mini-PC</text>
-  <text x="150" y="448" fill="#ccfbf1" font-size="10" text-anchor="middle">monitor-core</text>
-  <text x="150" y="462" fill="#ccfbf1" font-size="10" text-anchor="middle">recorder � API</text>
+  <g transform="translate(480,268)" filter="url(#glow)">
+    <ellipse rx="54" ry="30" fill="#1e293b" stroke="url(#cardHub)" stroke-width="3"/>
+    <ellipse rx="40" ry="18" cy="-6" fill="#334155" stroke="#fbbf24" stroke-width="1.5"/>
+    <text x="0" y="-2" fill="#fbbf24" font-size="12" text-anchor="middle" font-weight="700">купол-hub</text><text x="0" y="12" fill="#94a3b8" font-size="9" text-anchor="middle" font-weight="400">ПК + switch</text>
+  </g>
 
-  <rect x="260" y="400" width="140" height="75" rx="8" fill="#7c3aed" stroke="#c4b5fd"/>
-  <text x="330" y="428" fill="#f5f3ff" font-size="13" text-anchor="middle" font-weight="600">ai-engine</text>
-  <text x="330" y="448" fill="#ddd6fe" font-size="10" text-anchor="middle">????????? ??????</text>
-  <text x="330" y="462" fill="#ddd6fe" font-size="10" text-anchor="middle">ONNX CPU</text>
+  
+  <rect x="55" y="426" width="155" height="88" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="50" y="420" width="155" height="88" rx="14" fill="url(#cardTeal)" stroke="#5eead4" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="127.5" y="451" fill="#fff" font-size="15" text-anchor="middle" font-weight="700">mini-PC</text>
+  <text x="127.5" y="467" fill="#f1f5f9" font-size="11" text-anchor="middle" font-weight="400">monitor-core</text><text x="127.5" y="482" fill="#f1f5f9" font-size="11" text-anchor="middle" font-weight="400">recorder · API</text>
+  
+  <rect x="230" y="426" width="155" height="88" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="225" y="420" width="155" height="88" rx="14" fill="url(#cardPurple)" stroke="#c4b5fd" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="302.5" y="451" fill="#fff" font-size="15" text-anchor="middle" font-weight="700">ai-engine</text>
+  <text x="302.5" y="467" fill="#f1f5f9" font-size="11" text-anchor="middle" font-weight="400">детект · класс</text><text x="302.5" y="482" fill="#f1f5f9" font-size="11" text-anchor="middle" font-weight="400">ONNX CPU</text>
+  
+  <rect x="405" y="426" width="155" height="88" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="400" y="420" width="155" height="88" rx="14" fill="url(#cardBlue)" stroke="#7dd3fc" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="477.5" y="451" fill="#fff" font-size="15" text-anchor="middle" font-weight="700">operator-ui</text>
+  <text x="477.5" y="467" fill="#f1f5f9" font-size="11" text-anchor="middle" font-weight="400">карта · калибр.</text><text x="477.5" y="482" fill="#f1f5f9" font-size="11" text-anchor="middle" font-weight="400">:3000</text>
+  
+  <rect x="580" y="426" width="155" height="88" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="575" y="420" width="155" height="88" rx="14" fill="url(#cardOrange)" stroke="#fdba74" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="652.5" y="451" fill="#fff" font-size="15" text-anchor="middle" font-weight="700">simulator</text>
+  <text x="652.5" y="467" fill="#f1f5f9" font-size="11" text-anchor="middle" font-weight="400">сценарии</text><text x="652.5" y="482" fill="#f1f5f9" font-size="11" text-anchor="middle" font-weight="400">:8070</text>
+  
+  <rect x="755" y="426" width="160" height="88" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="750" y="420" width="160" height="88" rx="14" fill="url(#cardGray)" stroke="#94a3b8" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="830" y="451" fill="#fff" font-size="15" text-anchor="middle" font-weight="700">Switch 12p</text>
+  <text x="830" y="467" fill="#f1f5f9" font-size="11" text-anchor="middle" font-weight="400">8 камер + ПК</text><text x="830" y="482" fill="#f1f5f9" font-size="11" text-anchor="middle" font-weight="400">без PoE</text>
 
-  <rect x="440" y="400" width="140" height="75" rx="8" fill="#334155" stroke="#94a3b8"/>
-  <text x="510" y="428" fill="#f1f5f9" font-size="13" text-anchor="middle" font-weight="600">Switch 12p</text>
-  <text x="510" y="448" fill="#cbd5e1" font-size="10" text-anchor="middle">8 ????? + ??</text>
+  <line x1="205" y1="464" x2="225" y2="464" stroke="#64748b" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="380" y1="464" x2="400" y2="464" stroke="#64748b" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="555" y1="464" x2="575" y2="464" stroke="#64748b" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="730" y1="464" x2="750" y2="464" stroke="#64748b" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="830" y1="420" x2="480" y2="375" stroke="#64748b" stroke-width="2.5" marker-end="url(#arr)" stroke-dasharray="6 4"/>
 
-  <rect x="620" y="400" width="220" height="75" rx="8" fill="#1e293b" stroke="#475569"/>
-  <text x="730" y="432" fill="#e2e8f0" font-size="11" text-anchor="middle">??? ESP32 � ??? MQTT</text>
-  <text x="730" y="452" fill="#94a3b8" font-size="10" text-anchor="middle">PTZ: ONVIF pan/tilt/zoom</text>
-  <text x="730" y="468" fill="#94a3b8" font-size="10" text-anchor="middle">~252k ? ??????</text>
+  <rect x="620" y="155" width="200" height="72" rx="12" fill="#1e293b" stroke="#475569" stroke-width="2" filter="url(#shadow)"/>
+  <text x="720" y="180" fill="#e2e8f0" font-size="12" text-anchor="middle" font-weight="700">без ESP32 · без MQTT</text>
+  <text x="720" y="200" fill="#94a3b8" font-size="10" text-anchor="middle" font-weight="400">PTZ: ONVIF pan/tilt/zoom</text>
+  <text x="720" y="216" fill="#fca5a5" font-size="10" text-anchor="middle" font-weight="400">турель 0..N · fleet</text>
+  <text x="720" y="232" fill="#64748b" font-size="10" text-anchor="middle" font-weight="400">~252 000 ₽ камеры</text>
 
-  <line x1="220" y1="438" x2="260" y2="438" stroke="#64748b" stroke-width="2"/>
-  <line x1="400" y1="438" x2="440" y2="438" stroke="#64748b" stroke-width="2"/>
-  <line x1="580" y1="438" x2="620" y2="438" stroke="#64748b" stroke-width="2"/>
-  <line x1="510" y1="400" x2="460" y2="345" stroke="#64748b" stroke-dasharray="4 3"/>
 </svg>

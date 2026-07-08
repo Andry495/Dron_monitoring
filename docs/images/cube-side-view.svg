@@ -1,30 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 480" font-family="Segoe UI, Arial, sans-serif">
-  <rect width="760" height="480" fill="#0f172a"/>
-  <text x="380" y="32" fill="#e2e8f0" font-size="20" text-anchor="middle" font-weight="700">??? ????? � ??? ? ????</text>
-  <text x="380" y="54" fill="#94a3b8" font-size="12" text-anchor="middle">Sky: ???? ? � PTZ: home ????? ? pan/tilt ? ????</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" font-family="Arial, sans-serif">
 
-  <rect x="0" y="70" width="760" height="100" fill="#0c4a6e" opacity="0.3"/>
-  <text x="380" y="95" fill="#7dd3fc" font-size="13" text-anchor="middle">????</text>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="45%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#082f49"/>
+    </linearGradient>
+    <linearGradient id="cardTeal" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#14b8a6"/><stop offset="100%" stop-color="#0f766e"/></linearGradient>
+    <linearGradient id="cardPurple" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#6d28d9"/></linearGradient>
+    <linearGradient id="cardBlue" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+    <linearGradient id="cardOrange" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fb923c"/><stop offset="100%" stop-color="#c2410c"/></linearGradient>
+    <linearGradient id="cardGray" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#64748b"/><stop offset="100%" stop-color="#334155"/></linearGradient>
+    <linearGradient id="cardHub" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fcd34d"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+    <linearGradient id="skyG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4ade80"/><stop offset="100%" stop-color="#15803d"/></linearGradient>
+    <linearGradient id="ptzG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#1d4ed8"/></linearGradient>
+    <radialGradient id="skyZone" cx="50%" cy="40%" r="55%"><stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35"/><stop offset="100%" stop-color="#0ea5e9" stop-opacity="0"/></radialGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.45"/></filter>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#94a3b8"/></marker>
+  </defs>
+  <rect width="800" height="520" fill="url(#bg)"/>
+  <text x="400" y="36" fill="#e2e8f0" font-size="24" text-anchor="middle" font-weight="700">Куб — вид сбоку</text>
+  <text x="400" y="60" fill="#94a3b8" font-size="12" text-anchor="middle" font-weight="400">Sky tilt 25° · PTZ home зенит</text>
+  <rect x="0" y="80" width="800" height="120" fill="url(#skyZone)"/>
+  <text x="400" y="130" fill="#7dd3fc" font-size="18" text-anchor="middle" font-weight="700">небо</text>
 
-  <rect x="98" y="175" width="36" height="48" rx="4" fill="#22c55e"/>
-  <polygon points="116,168 126,182 106,182" fill="#bbf7d0"/>
-  <text x="116" y="238" fill="#86efac" font-size="10" text-anchor="middle">Sky</text>
+  <g transform="translate(120,210)"><g transform="translate(0,0)" filter="url(#shadow)">
+    <circle r="18" fill="url(#skyG)" stroke="#86efac" stroke-width="2"/>
+    <polygon points="0,-12 8,7 -8,7" fill="#dcfce7"/>
+    <circle r="4" cy="2" fill="#14532d" opacity="0.4"/>
+    <text x="0" y="34" fill="#86efac" font-size="10" text-anchor="middle" font-weight="700">Sky</text>
+  </g></g>
+  <g transform="translate(400,200)"><g transform="translate(0,0)" filter="url(#shadow)">
+    <circle r="20" fill="url(#ptzG)" stroke="#93c5fd" stroke-width="2"/>
+    <polygon points="0,-14 10,9 -10,9" fill="#dbeafe"/>
+    <rect x="-7" y="9" width="14" height="7" rx="2" fill="#1e3a8a"/>
+    <text x="0" y="38" fill="#93c5fd" font-size="10" text-anchor="middle" font-weight="700">PTZ</text>
+  </g></g>
 
-  <rect x="358" y="175" width="44" height="52" rx="4" fill="#2563eb"/>
-  <polygon points="380,168 392,184 368,184" fill="#bfdbfe"/>
-  <text x="380" y="238" fill="#93c5fd" font-size="10" text-anchor="middle">PTZ</text>
+  <rect x="70" y="260" width="660" height="160" rx="14" fill="#1f2937" stroke="#64748b" stroke-width="3" filter="url(#shadow)"/>
+  <text x="400" y="345" fill="#cbd5e1" font-size="15" text-anchor="middle" font-weight="700">куб / рама V-slot ~1 m</text>
 
-  <rect x="622" y="175" width="44" height="52" rx="4" fill="#2563eb"/>
-  <polygon points="644,168 656,184 632,184" fill="#bfdbfe"/>
+  <line x1="120" y1="210" x2="300" y2="130" stroke="#4ade80" stroke-width="3" stroke-dasharray="8 5"/>
+  <text x="310" y="125" fill="#86efac" font-size="12" text-anchor="start" font-weight="700">tilt 25°</text>
+  <line x1="400" y1="200" x2="580" y2="115" stroke="#fbbf24" stroke-width="3" stroke-dasharray="8 5"/>
+  <text x="590" y="110" fill="#fbbf24" font-size="12" text-anchor="start" font-weight="700">pan/tilt</text>
 
-  <rect x="80" y="223" width="600" height="140" rx="6" fill="#1f2937" stroke="#64748b" stroke-width="2"/>
-  <text x="380" y="300" fill="#94a3b8" font-size="14" text-anchor="middle">??? / ???? V-slot</text>
+  <line x1="0" y1="440" x2="800" y2="440" stroke="#4ade80" stroke-width="3"/>
+  <text x="400" y="468" fill="#86efac" font-size="14" text-anchor="middle" font-weight="700">земля / крыша</text>
 
-  <line x1="380" y1="175" x2="520" y2="110" stroke="#fbbf24" stroke-width="2" stroke-dasharray="6 4"/>
-  <text x="530" y="108" fill="#fbbf24" font-size="11">pan/tilt</text>
-
-  <rect x="0" y="380" width="760" height="60" fill="#14532d" opacity="0.25"/>
-  <line x1="0" y1="380" x2="760" y2="380" stroke="#4ade80"/>
-  <text x="380" y="405" fill="#86efac" font-size="12" text-anchor="middle">?????</text>
 </svg>

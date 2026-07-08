@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" font-family="Arial, sans-serif">
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="45%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#082f49"/>
+    </linearGradient>
+    <linearGradient id="cardTeal" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#14b8a6"/><stop offset="100%" stop-color="#0f766e"/></linearGradient>
+    <linearGradient id="cardPurple" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#6d28d9"/></linearGradient>
+    <linearGradient id="cardBlue" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+    <linearGradient id="cardOrange" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fb923c"/><stop offset="100%" stop-color="#c2410c"/></linearGradient>
+    <linearGradient id="cardGray" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#64748b"/><stop offset="100%" stop-color="#334155"/></linearGradient>
+    <linearGradient id="cardHub" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fcd34d"/><stop offset="100%" stop-color="#b45309"/></linearGradient>
+    <linearGradient id="skyG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4ade80"/><stop offset="100%" stop-color="#15803d"/></linearGradient>
+    <linearGradient id="ptzG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#1d4ed8"/></linearGradient>
+    <radialGradient id="skyZone" cx="50%" cy="40%" r="55%"><stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35"/><stop offset="100%" stop-color="#0ea5e9" stop-opacity="0"/></radialGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.45"/></filter>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#94a3b8"/></marker>
+  </defs>
+  <rect width="960" height="400" fill="url(#bg)"/>
+  <text x="480" y="36" fill="#e2e8f0" font-size="24" text-anchor="middle" font-weight="700">Консоль оператора</text>
+  
+  <rect x="45" y="86" width="155" height="55" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="40" y="80" width="155" height="55" rx="14" fill="url(#cardGray)" stroke="#64748b" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="117.5" y="109.5" fill="#e2e8f0" font-size="15" text-anchor="middle" font-weight="700">Обзор</text>
+  
+  <rect x="225" y="86" width="155" height="55" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="220" y="80" width="155" height="55" rx="14" fill="url(#cardGray)" stroke="#64748b" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="297.5" y="109.5" fill="#e2e8f0" font-size="15" text-anchor="middle" font-weight="700">Карта ENU</text>
+  
+  <rect x="405" y="86" width="155" height="55" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="400" y="80" width="155" height="55" rx="14" fill="url(#cardGray)" stroke="#64748b" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="477.5" y="109.5" fill="#e2e8f0" font-size="15" text-anchor="middle" font-weight="700">Калибровка</text>
+  
+  <rect x="585" y="86" width="155" height="55" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="580" y="80" width="155" height="55" rx="14" fill="url(#cardGray)" stroke="#64748b" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="657.5" y="109.5" fill="#e2e8f0" font-size="15" text-anchor="middle" font-weight="700">Симуляция</text>
+  
+  <rect x="765" y="86" width="155" height="55" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="760" y="80" width="155" height="55" rx="14" fill="url(#cardGray)" stroke="#64748b" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="837.5" y="109.5" fill="#e2e8f0" font-size="15" text-anchor="middle" font-weight="700">Настройки</text>
+  
+
+  
+  <rect x="45" y="186" width="280" height="100" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="40" y="180" width="280" height="100" rx="14" fill="url(#cardBlue)" stroke="#7dd3fc" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="180" y="224.5" fill="#fff" font-size="15" text-anchor="middle" font-weight="700">operator-ui</text>
+  <text x="180" y="240.5" fill="#f1f5f9" font-size="11" text-anchor="middle" font-weight="400">прокси API</text>
+  
+  <rect x="365" y="186" width="280" height="100" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="360" y="180" width="280" height="100" rx="14" fill="url(#cardTeal)" stroke="#5eead4" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="500" y="224.5" fill="#fff" font-size="15" text-anchor="middle" font-weight="700">monitor-core</text>
+  <text x="500" y="240.5" fill="#f1f5f9" font-size="11" text-anchor="middle" font-weight="400">WS live</text>
+  
+  <rect x="685" y="186" width="240" height="100" rx="14" fill="#000" opacity="0.3"/>
+  <rect x="680" y="180" width="240" height="100" rx="14" fill="url(#cardOrange)" stroke="#fdba74" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="800" y="224.5" fill="#fff" font-size="15" text-anchor="middle" font-weight="700">simulator</text>
+  <text x="800" y="240.5" fill="#f1f5f9" font-size="11" text-anchor="middle" font-weight="400">сценарии</text>
+  <line x1="320" y1="230" x2="360" y2="230" stroke="#64748b" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="640" y1="230" x2="680" y2="230" stroke="#f59e0b" stroke-width="2.5" marker-end="url(#arr)"/>
+
+  <text x="480" y="340" fill="#94a3b8" font-size="13" text-anchor="middle" font-weight="400">симуляция: старт сценария → core/simulation → карта + треки</text>
+
+</svg>
